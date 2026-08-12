@@ -15,7 +15,7 @@ The workshop focuses on resiliency services rather than application development.
 
 Together, these tracks demonstrate cross-region application DR orchestration with Full Stack DR and single-region backup and recovery orchestration with Full Stack BR.
 
-## Service Overview
+## Task 1: Service Overview
 
 ### OCI Full Stack Disaster Recovery
 
@@ -71,7 +71,7 @@ OCI Full Stack DR and BR help organizations:
 
 Estimated Workshop Time: 90 minutes
 
-## Workshop Architecture
+## Task 2: Workshop Architecture
 
 The workshop uses a primary OKE and Autonomous AI Database environment in one OCI region and a standby recovery environment in a second OCI region. Autonomous Data Guard protects the Autonomous AI Database, and cross-region volume replication protects the Ollama persistent volume. Full Stack DR coordinates the application, storage, database, and validation workflow. BR provides regional backup and recovery for protected compute and volume resources.
 
@@ -83,7 +83,7 @@ The workshop uses a primary OKE and Autonomous AI Database environment in one OC
 
 ![OCI Full Stack Backup Recovery protecting two compute VMs and a volume group in the Ashburn region](./images/full-stack-br-architecture.png)
 
-## Environment Details
+## Task 3: Environment Details
 
 - The primary and standby region names are supplied by the workshop environment. We will start with Primary region as `Ashburn` and Standby region as `Phoenix`.
 - The bootstrap script creates the `fsdr-iad-primary` and `fsdr-phx-standby` Kubernetes contexts.
@@ -98,7 +98,7 @@ The workshop environment includes the following resources for the two resiliency
 - **Full Stack DR:** A primary OKE cluster and Autonomous AI Database in the primary region, a standby OKE cluster and Autonomous AI Database in the standby region, and Autonomous Data Guard between the databases. Lab 1 creates and configures the Ollama persistent volume group with cross-region replication.
 - **Full Stack BR:** Two compute instances and their shared block volume group in the primary region. These resources are added to a BR protection group for backup and recovery.
 
-## Workshop Objectives
+## Task 4: Workshop Objectives
 
 - Deploy and validate the cloud-native AI workload.
 - Configure the Full Stack DR resources.
@@ -109,7 +109,7 @@ The workshop environment includes the following resources for the two resiliency
 - Run BR plans and verify their executions.
 - Troubleshoot common policy, context, replication, and application validation issues.
 
-## Reference Links
+## Task 5: Reference Links
 
 [OCI Full Stack Disaster Recovery](https://www.oracle.com/cloud/full-stack-disaster-recovery/)
 
