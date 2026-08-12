@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Workload Orchestration and Disaster Recovery with OCI Full Stack DR</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b0d10; --card:#151922; --muted:#9aa4b2; --line:#28303d; --accent:#f15a24; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,sans-serif; background:radial-gradient(circle at top right,#2a1510 0,#0b0d10 42%); color:#f7f8fa; min-height:100vh; }
+    .wrap { max-width:1180px; margin:auto; padding:32px 20px 42px; }
+    header { display:flex; justify-content:space-between; gap:20px; align-items:center; margin-bottom:24px; }
+    .eyebrow { margin:0 0 8px; color:#ff9a6c; font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+    h1 { margin:0; font-size:clamp(28px,5vw,48px); letter-spacing:-.04em; }
+    .tag { border:1px solid #ff9a6c; background:linear-gradient(135deg,#f15a24,#c93612); border-radius:999px; padding:10px 16px; color:#fff; font-weight:800; letter-spacing:.01em; box-shadow:0 8px 24px rgba(241,90,36,.35); white-space:nowrap; }
+    .grid { display:grid; grid-template-columns:1.5fr .9fr; gap:18px; }
+    .card { background:rgba(21,25,34,.92); border:1px solid var(--line); border-radius:20px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,.25); transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease; }
+    .card:hover { transform:translateY(-2px); border-color:#3d4b60; box-shadow:0 24px 70px rgba(0,0,0,.34); }
+    textarea, input[type="file"] { width:100%; background:#0e1218; color:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; font:inherit; }
+    textarea { min-height:115px; resize:vertical; }
+    button { margin-top:12px; border:0; border-radius:12px; padding:12px 18px; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; }
+    button:disabled { opacity:.55; cursor:wait; }
+    .answer { white-space:pre-wrap; line-height:1.55; min-height:150px; color:#e8ebef; }
+    .status { display:grid; gap:10px; }
+    .status div { display:flex; justify-content:space-between; border-bottom:1px solid var(--line); padding:11px 0; }
+    .ok { color:#46d17d; } .bad { color:#ff6b6b; }
+    .history, .docs { margin-top:18px; }
+    .item { padding:14px 0; border-top:1px solid var(--line); }
+    .item b { display:block; margin-bottom:6px; }
+    .meta { color:var(--muted); font-size:13px; margin-top:8px; }
+    .row { display:grid; gap:10px; }
+    .small { font-size:13px; color:var(--muted); }
+    .source { padding:10px 12px; border:1px solid var(--line); border-radius:12px; margin-top:10px; color:#dbe1ea; background:#10141b; }
+    .architecture { margin-bottom:18px; }
+    .architecture h2 { margin-top:0; }
+    .arch-mode { padding:16px 0; }
+    .arch-mode + .arch-mode { border-top:1px solid var(--line); }
+    .arch-mode h3 { margin:0 0 12px; color:#ffb08e; }
+    .arch-flow { display:flex; align-items:stretch; justify-content:center; gap:12px; }
+    .arch-node { flex:1; min-width:0; padding:18px 14px; border:1px solid #40506a; border-radius:16px; background:linear-gradient(160deg,#1b2433,#111720); text-align:center; }
+    .arch-icon { display:grid; place-items:center; width:38px; height:38px; margin:0 auto 10px; border-radius:12px; background:#273448; font-size:20px; }
+    .arch-node strong { display:block; color:#fff; font-size:16px; }
+    .arch-node span { display:block; margin-top:6px; color:var(--muted); font-size:13px; }
+    .arch-node.primary { border-color:#ff8558; box-shadow:0 8px 24px rgba(241,90,36,.16); }
+    .arch-arrow { align-self:center; color:#ff8558; font-size:24px; font-weight:800; }
+    @media (max-width:800px){ .grid{grid-template-columns:1fr;} header{align-items:flex-start;flex-direction:column;} .arch-flow{flex-direction:column;} .arch-arrow{transform:rotate(90deg);} }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><p class="eyebrow">Oracle Cloud · AI disaster recovery</p><h1>AI Workload Orchestration and Disaster Recovery with OCI Full Stack DR</h1><p style="color:var(--muted)">Oracle Autonomous AI Database + Oracle Kubernetes Engine + Ollama</p></div>
+    <div class="tag" id="region">Region: checking...</div>
+  </header>
+  <section class="card architecture">
+    <h2>AI workload architecture</h2>
+    <div class="arch-mode">
+      <h3>1. AI workload without RAG</h3>
+      <div class="arch-flow" aria-label="AI workload without RAG">
+        <div class="arch-node"><div class="arch-icon">👤</div><strong>User</strong><span>Ask a question</span></div>
+        <div class="arch-arrow" aria-hidden="true">→</div>
+        <div class="arch-node primary"><div class="arch-icon">☁️</div><strong>Oracle Kubernetes Engine</strong><span>Application API</span></div>
+        <div class="arch-arrow" aria-hidden="true">→</div>
+        <div class="arch-node primary"><div class="arch-icon">✦</div><strong>Ollama</strong><span>AI inference</span></div>
+      </div>
+    </div>
+    <div class="arch-mode">
+      <h3>2. AI workload with RAG</h3>
+      <div class="arch-flow" aria-label="AI workload with RAG">
+        <div class="arch-node"><div class="arch-icon">👤</div><strong>User</strong><span>Ask a question or upload a document</span></div>
+        <div class="arch-arrow" aria-hidden="true">→</div>
+        <div class="arch-node primary"><div class="arch-icon">☁️</div><strong>Oracle Kubernetes Engine</strong><span>RAG API retrieves context</span></div>
+        <div class="arch-arrow" aria-hidden="true">↔</div>
+        <div class="arch-node primary"><div class="arch-icon">▦</div><strong>Oracle Autonomous AI Database</strong><span>Documents, embeddings, and history</span></div>
+        <div class="arch-arrow" aria-hidden="true">→</div>
+        <div class="arch-node primary"><div class="arch-icon">✦</div><strong>Ollama</strong><span>Context-aware AI response</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="grid">
+    <section class="card">
+      <h2>Welcome to AI Chatbot with RAG</h2>
+      <textarea id="question">What is OCI Full Stack Disaster Recovery?</textarea>
+      <button id="ask">Ask</button>
+      <h3>Response</h3>
+      <div id="answer" class="answer">Ready.</div>
+      <div id="meta" class="meta"></div>
+      <div id="sources"></div>
+    </section>
+    <aside class="card">
+      <h2>Workload status</h2>
+      <div class="status">
+        <div><span>API</span><strong id="api">checking</strong></div>
+        <div><span>Autonomous DB</span><strong id="db">checking</strong></div>
+        <div><span>Connected DB region</span><strong id="db-region">-</strong></div>
+        <div><span>Ollama</span><strong id="ollama">checking</strong></div>
+        <div><span>Model</span><strong id="model">-</strong></div>
+      </div>
+
+      <div style="margin-top:18px">
+        <h3 style="margin-bottom:8px">Upload a document</h3>
+        <input id="file" type="file" accept=".pdf,.txt,.md,application/pdf,text/plain" />
+        <button id="upload">Upload & Index</button>
+        <div class="small" id="upload-status">Supported: PDF, TXT, MD</div>
+      </div>
+    </aside>
+  </div>
+  <section class="card docs">
+    <h2>ADB-backed documents</h2>
+    <div id="documents">Loading...</div>
+  </section>
+  <section class="card history">
+    <h2>ADB-backed history</h2>
+    <div id="history">No messages yet.</div>
+  </section>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s??''; return d.innerHTML; }
+
+async function readApiResponse(response){
+  const contentType=response.headers.get('content-type')||'';
+  const text=await response.text();
+  let body=null;
+  if(contentType.includes('application/json')){
+    try{ body=JSON.parse(text); }catch(_){ body=null; }
+  }
+  if(!response.ok){
+    const detail=body?.detail||body?.message||text.trim()||`HTTP ${response.status}`;
+    if(response.status===413) throw new Error('File is too large. Maximum upload size is 25 MB.');
+    throw new Error(detail);
+  }
+  if(body!==null) return body;
+  throw new Error(`Server returned a non-JSON response (${response.status}).`);
+}
+
+async function health(){
+  try {
+    const r=await fetch('/api/health'); const h=await r.json();
+    $('api').textContent=h.status; $('api').className=h.status==='ok'?'ok':'bad';
+    $('db').textContent=h.database; $('db').className=h.database==='up'?'ok':'bad';
+    $('db-region').textContent=h.database_region||'unknown'; $('db-region').className=h.database==='up'?'ok':'bad';
+    $('ollama').textContent=h.ollama; $('ollama').className=h.ollama==='up'?'ok':'bad';
+    $('model').textContent=h.model; $('region').textContent='Active DB region: '+(h.database_region||h.region);
+  } catch(e){ $('api').textContent='down'; $('api').className='bad'; }
+}
+
+async function history(){
+  try {
+    const r=await fetch('/api/history'); const items=await r.json();
+    $('history').innerHTML=items.length?items.map(x=>`<div class="item"><b>${escapeHtml(x.question)}</b><div>${escapeHtml(x.answer)}</div><div class="meta">${x.region} · ${x.model} · ${x.latency_ms} ms · ${x.created_at}</div></div>`).join(''):'No messages yet.';
+  } catch(e){ $('history').textContent='History unavailable.'; }
+}
+
+async function documents(){
+  try {
+    const r=await fetch('/api/documents'); const items=await r.json();
+    $('documents').innerHTML=items.length?items.map(x=>`<div class="item"><b>${escapeHtml(x.filename)}</b><div class="meta">${escapeHtml(x.mime_type)} · ${x.chunk_count} chunks · ${x.uploaded_at}</div><div class="small">${escapeHtml((x.preview||'').slice(0,220))}${(x.preview||'').length>220?'…':''}</div></div>`).join(''):'No documents yet.';
+  } catch(e){ $('documents').textContent='Documents unavailable.'; }
+}
+
+$('ask').onclick=async()=>{
+  const q=$('question').value.trim(); if(!q)return;
+  $('ask').disabled=true; $('answer').textContent='Generating response...'; $('meta').textContent=''; $('sources').innerHTML='';
+  try {
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});
+    const b=await readApiResponse(r);
+    $('answer').textContent=b.answer; $('meta').textContent=`${b.region} · ${b.model} · ${b.latency_ms} ms`;
+    $('sources').innerHTML=(b.sources||[]).length?`<div class="meta">Sources</div>`+(b.sources||[]).map(s=>`<div class="source"><b>${escapeHtml(s.filename)}</b><div class="small">Chunk ${s.chunk_index}</div><div>${escapeHtml(s.preview)}</div></div>`).join(''):'';
+    await history();
+  } catch(e){ $('answer').textContent='Error: '+e.message; }
+  finally { $('ask').disabled=false; }
+};
+
+$('upload').onclick=async()=>{
+  const file=$('file').files[0];
+  if(!file){ $('upload-status').textContent='Choose a file first.'; return; }
+  if(file.size>25*1024*1024){ $('upload-status').textContent='Upload error: File is too large. Maximum upload size is 25 MB.'; return; }
+  $('upload').disabled=true; $('upload-status').textContent='Uploading and indexing...';
+  try{
+    const fd=new FormData(); fd.append('file', file);
+    const r=await fetch('/api/upload',{method:'POST',body:fd});
+    const b=await readApiResponse(r);
+    $('upload-status').textContent=`Indexed ${b.filename} into ADB (${b.chunks_created} chunks).`;
+    await documents();
+  }catch(e){ $('upload-status').textContent='Upload error: '+e.message; }
+  finally { $('upload').disabled=false; }
+};
+
+health(); history(); documents(); setInterval(health,15000);
+</script>
+</body>
+</html>

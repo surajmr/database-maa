@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-backend
+  namespace: ai-fsdr-lab
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ai-backend
+  template:
+    metadata:
+      labels:
+        app: ai-backend
+    spec:
+      containers:
+        - name: api
+          image: docker.io/library/python:3.11-slim
+          imagePullPolicy: IfNotPresent
+          workingDir: /app
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -eu
+              python -m venv /tmp/venv
+              /tmp/venv/bin/pip install --disable-pip-version-check --no-cache-dir -r /app/requirements.txt
+              rm -rf /opt/oracle/wallet
+              mkdir -p /opt/oracle/wallet
+              /tmp/venv/bin/python -c 'import zipfile; zipfile.ZipFile("/run/secrets/adb/wallet.zip").extractall("/opt/oracle/wallet")'
+              exec /tmp/venv/bin/uvicorn app:app --host 0.0.0.0 --port 8000
+          envFrom:
+            - secretRef:
+                name: adb-config
+          env:
+            - name: TNS_ADMIN
+              value: /opt/oracle/wallet
+            - name: OLLAMA_URL
+              value: http://ollama:11434
+            - name: OLLAMA_MODEL
+              value: qwen2.5:0.5b
+            - name: OCI_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: lab-config
+                  key: OCI_REGION
+            - name: ADB_PRIMARY_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: lab-config
+                  key: ADB_PRIMARY_REGION
+            - name: ADB_STANDBY_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: lab-config
+                  key: ADB_STANDBY_REGION
+          ports:
+            - name: http
+              containerPort: 8000
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+          volumeMounts:
+            - name: source
+              mountPath: /app
+              readOnly: true
+            - name: wallet
+              mountPath: /run/secrets/adb
+              readOnly: true
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            timeoutSeconds: 45
+            periodSeconds: 10
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            timeoutSeconds: 45
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            timeoutSeconds: 45
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            failureThreshold: 3
+      volumes:
+        - name: source
+          configMap:
+            name: ai-backend-source
+        - name: wallet
+          secret:
+            secretName: adb-wallet
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-backend
+  namespace: ai-fsdr-lab
+spec:
+  selector:
+    app: ai-backend
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http
