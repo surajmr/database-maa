@@ -24,7 +24,15 @@ In this lab, you will:
 
 ## Task 1: Run the BR Configuration Script
 
-1. In the Ashburn Cloud Shell, change to the application package directory created in Lab 1.
+1. In the Ashburn Cloud Shell, change to the application directory created in Lab 1.
+
+    Run:
+
+    ```bash
+    <copy>
+    cd ~/oci-ai-resiliency-lab
+    </copy>
+    ```
 
 2. Run the OCI Full Stack Backup Recovery configuration script supplied with the lab environment.
 
@@ -60,19 +68,7 @@ In this lab, you will:
 
 4. Confirm that the policy applies to both compute members and the volume group. The policy establishes the backup posture; it does not create a recovery point until a backup plan runs.
 
-## Task 4: Create and Review a BR Point
-
-1. Open the **Catalog** or **BR Points** tab for the protection group.
-
-2. Review the available member backups. Confirm that the catalog lists backups for both compute instances and the volume group.
-
-3. Select the BR point that contains the required member backups. Confirm its creation time, protected members, and status.
-
-    A BR point represents a consistent recovery point assembled from the protected member backups. Use a completed BR point for recovery operations.
-
-4. If the lab environment does not contain a completed BR point, run the backup plan in Task 5 and return to this task after the execution completes.
-
-## Task 5: Run and Verify the BR Plan
+## Task 4: Run and Verify the BR Plan
 
 1. Open the **Plans** tab for the BR protection group. Review the available backup and recovery plans.
 
@@ -84,7 +80,17 @@ In this lab, you will:
 
 5. Wait for the execution to complete successfully. Record the BR point identifier or execution identifier.
 
-6. Confirm that the catalog shows the resulting recovery point and that the protected members remain associated with the BR protection group.
+## Task 5: Create and Review a BR Point
+
+1. Open the **Catalog** or **BR Points** tab for the protection group.
+
+2. Review the available member backups. Confirm that the catalog lists backups for both compute instances and the volume group.
+
+3. Select the BR point created by the completed Task 4 execution. Confirm its creation time, protected members, and status.
+
+    A BR point represents a consistent recovery point assembled from the protected member backups. Use a completed BR point for recovery operations.
+
+4. Confirm that the protected members remain associated with the BR protection group.
 
 ## Conclusion
 

@@ -42,20 +42,23 @@ In this lab, you will:
     </copy>
     ```
 
-    ![Run the Full Stack DR snapshot standby configuration script](./images/run-full-stack-dr-snapshot-standby.png)
+    The configuration script in Task 1 runs in interactive pause mode. It stops before every resource-creation step. Review the resources shown, then press **Enter** to continue or type `q` to stop. The script pauses before creating the standby DR protection group, before creating and associating the primary DR protection group, and before creating each plan. Allow the preceding work request to complete before continuing to the next prompt.
 
-    The script takes approximately 10 minutes. While it runs, continue to **Task 2: Monitor the Configuration in the OCI Console**. Keep the Ashburn Cloud Shell tab open. Return here when the script finishes. Confirm that it returns to the shell prompt and displays the protection group and plan OCIDs. The script performs these actions:
+    ![Lab 2 snapshot standby script paused before creating the standby DR protection group](./images/fsdr-snapshot-standby-pause-standby.png)
 
-    - Creates a DR protection group in the primary region.
+    ![Lab 2 snapshot standby script paused before creating the DR plans](./images/fsdr-snapshot-standby-pause-plans.png)
+
+    The script takes approximately 10 minutes, excluding time spent at the confirmation prompts. While the script is waiting at a prompt or processing a work request, continue to **Task 2: Monitor the Configuration in the OCI Console**. Keep the Ashburn Cloud Shell tab open. Return to Task 1 when the script finishes. Confirm that it returns to the shell prompt and displays the protection group and plan OCIDs. The script performs these actions in order:
+
     - Creates a DR protection group in the standby region.
-    - Associates the protection groups and assigns their primary and standby roles.
-    - Adds the primary OKE cluster, primary ATP, and Ollama volume group to the primary DR protection group.
     - Adds the standby OKE cluster and standby ATP to the standby DR protection group.
-    - Creates Switchover, Failover, and Start Drill plans in the standby DR protection group.
+    - Creates the primary DR protection group in the primary region and associates it with the standby DR protection group using the **Primary** role.
+    - Adds the primary OKE cluster, primary ATP, and Ollama volume group to the primary DR protection group.
+    - Creates the **Switchover**, **Failover**, and **Start Drill** plans in the standby DR protection group, pausing for confirmation before each plan.
 
     A successful run displays the OCIDs for the primary and standby protection groups and the three plans.
 
-    ![Full Stack DR configuration script completed successfully](./images/full-stack-dr-configuration-complete.png)
+    ![Lab 2 snapshot standby script completed with masked OCIDs](./images/fsdr-snapshot-standby-complete.png)
 
 ## Task 2: Monitor the Configuration in the OCI Console
 

@@ -149,6 +149,16 @@ def create_plan(region, drpg_id, plan_type, deploy_id):
     return response["data"]["id"]
 
 
+def confirm(message):
+    """Pause before every resource-creation step."""
+    try:
+        answer = input("\n{}\nPress Enter to continue, or type 'q' to quit: ".format(message))
+    except EOFError as error:
+        raise RuntimeError("Interactive confirmation is required for Lab 2") from error
+    if answer.strip().lower() in {"q", "quit", "n", "no"}:
+        raise RuntimeError("Stopped by user before resource creation")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", default=os.getenv("FSDR_MANIFEST", DEFAULT_MANIFEST))
@@ -207,19 +217,22 @@ def main():
     }
 
     logger.info("Preparing Snapshot Standby ATP members and OKE members")
+    confirm("Ready to create the standby DR protection group in {}.\nResources: standby ATP and standby OKE cluster.".format(standby_region))
     logger.info("Creating standby DR protection group in %s", standby_region)
     standby_drpg = create_drpg(standby_region, standby_details)
     logger.info("Standby DR protection group created: %s", standby_drpg)
     logger.info("Standby DRPG members added: standby ATP and standby OKE cluster")
     primary_details["association"] = {"peerId": standby_drpg, "peerRegion": standby_region, "role": "PRIMARY"}
+    confirm("Ready to create and associate the primary DR protection group in {}.\nResources: primary ATP, primary OKE cluster, and Ollama volume group.".format(primary_region))
     logger.info("Associating primary DR protection group with standby DRPG %s", standby_drpg)
     primary_drpg = create_drpg(primary_region, primary_details)
     logger.info("Primary DR protection group created and associated: %s", primary_drpg)
     logger.info("Primary DRPG members added: primary ATP, primary OKE cluster, and Ollama volume group")
     logger.info("Creating DR plans in the standby DR protection group")
-    # Create the complete plan set for this Snapshot Standby variant.
-    plans = {kind: create_plan(standby_region, standby_drpg, kind, values["deploy_id"])
-             for kind in ("SWITCHOVER", "FAILOVER", "START_DRILL")}
+    plans = {}
+    for plan_type in ("SWITCHOVER", "FAILOVER", "START_DRILL"):
+        confirm("Ready to create the {} plan in {}.".format(plan_type, standby_region))
+        plans[plan_type] = create_plan(standby_region, standby_drpg, plan_type, values["deploy_id"])
     print(json.dumps({"primary_drpg_ocid": primary_drpg, "standby_drpg_ocid": standby_drpg, "dr_plan_ocids": plans}, indent=2))
 
 
