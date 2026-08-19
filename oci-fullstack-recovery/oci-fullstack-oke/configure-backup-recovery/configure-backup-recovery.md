@@ -126,23 +126,55 @@ In this lab, you will:
 
     ![Confirm execution of the default backup plan](./images/full-stack-br-execute-backup-confirmation.png)
 
-5. Open the execution details and monitor each plan group. Review task status, logs, warnings, and failures as the execution progresses.
+5. Open the **Plan executions** tab, select **First backup**, and monitor the plan execution groups. The prechecks run first, followed by the volume-group and compute-instance backup groups.
 
-6. Wait for the execution to complete successfully. Record the Full Stack BR point identifier or execution identifier. Then return to the two workload tabs and record the updated **AI jobs completed** value from VM 0 and VM 1. Compare the values with the pre-backup baseline.
+    ![First backup execution in progress](./images/full-stack-br-backup-in-progress.png)
+
+6. Wait a few minutes for the execution to complete successfully. Confirm that **First backup** shows **Succeeded**.
+
+    ![First backup execution succeeded](./images/full-stack-br-backup-succeeded.png)
+
+7. Open the **Member backups** tab for the Full Stack BR protection group. Confirm that backups are available for both compute instances and both individual volume groups.
+
+    ![Available Full Stack BR member backups](./images/full-stack-br-member-backups.png)
+
+8. Return to the two workload tabs and record the updated **AI jobs completed** value from VM 0 and VM 1. Compare the values with the pre-backup baseline.
 
     ![Synthetic AI workload counters after the backup](./images/synthetic-ai-workload-post-backup.png)
 
-## Task 5: Create and Review a Full Stack BR Point
+## Task 5: Create a Recovery Point and Run the Recovery Plan
 
-1. Open the **Catalog** or **Full Stack BR Points** tab for the protection group.
+1. Open the **Recovery catalog** tab for the Full Stack BR protection group. Confirm that the catalog is active and that the **Create recovery point** button is available.
 
-2. Review the available member backups. Confirm that the catalog lists backups for both compute instances and both volume groups.
+    ![Recovery catalog for the Full Stack BR protection group](./images/full-stack-br-recovery-catalog-empty.png)
 
-3. Select the Full Stack BR point created by the completed Task 4 backup execution. Confirm its creation time, protected members, and status.
+2. Select **Create recovery point**. Enter `First recovery point` as the name and description, leave the recovery point date and time disabled, keep **Completion mode** set to **Allow partial**, and select the object storage bucket and log location shown for your environment. Select **Create**.
 
-    A Full Stack BR point represents a consistent recovery point assembled from the protected member backups. Use a completed Full Stack BR point for recovery operations.
+    ![Create a Full Stack BR recovery point](./images/full-stack-br-create-recovery-point.png)
 
-4. Confirm that the protected members remain associated with the Full Stack BR protection group.
+3. Monitor the Recovery catalog until **First recovery point** is **Active**. Confirm that the recovery point is available and uses the member backups created in Task 4.
+
+    ![Active First recovery point](./images/full-stack-br-recovery-catalog-point.png)
+
+4. Before running the recovery plan, return to the two workload tabs and record the current **AI jobs completed** value from VM 0 and VM 1. Use these values as the pre-recovery baseline.
+
+    ![Synthetic AI workload counters before recovery](./images/synthetic-ai-workload-pre-recovery.png)
+
+5. In the Recovery catalog, select **First recovery point**. Confirm that its state is **Active**, then select **Actions** → **Recover now**.
+
+    ![Recover now from the First recovery point](./images/full-stack-br-recovery-point-recover-now.png)
+
+6. In the execution form, confirm that **default-recover-plan** is selected and that the recovery point is **First recovery point**. Leave prechecks enabled, enter a name such as `Recovery plan execution`, and select **Execute plan**.
+
+    ![Execute the recovery plan from the First recovery point](./images/full-stack-br-recovery-plan-execution.png)
+
+7. Open the **Plan executions** tab, select **Recovery plan execution**, and monitor the plan execution groups. Confirm that the prechecks, compute stop, volume-group restore, boot-volume replacement, compute start, and block-volume replacement groups progress to completion.
+
+    ![Monitor the recovery plan execution](./images/full-stack-br-recovery-execution-progress.png)
+
+8. Return to the two workload tabs and record the final **AI jobs completed** value from VM 0 and VM 1. Compare the final values with the pre-backup, post-backup, and pre-recovery values to observe workload continuity through the backup and recovery workflow.
+
+    ![Synthetic AI workload counters after recovery](./images/synthetic-ai-workload-after-recovery.png)
 
 ## Conclusion
 
