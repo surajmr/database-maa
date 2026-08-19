@@ -38,6 +38,8 @@ In this lab, you will:
 
 2. In separate browser tabs, open `http://<public-ip-1>` for VM 0 and `http://<public-ip-2>` for VM 1. Use the first tab to monitor VM 0 and the second tab to monitor VM 1. Record the number of completed AI jobs shown by the synthetic AI workload on each VM. These values are the baseline for the Full Stack BR backup and recovery validation. Keep both tabs open throughout Lab 5 and return to them at each major Full Stack BR milestone to record the updated counters.
 
+    **In the example run, the baseline is 454 completed jobs on each VM. Your values will vary depending on when each VM was started and how long the workload has been running. Always use the values displayed in your own VM tabs when comparing checkpoints.**
+
     ![Synthetic AI workload counters for VM 0 and VM 1](./images/synthetic-ai-workload-vm-counters.png)
 
 ## Task 2: Configure Full Stack BR
@@ -114,7 +116,7 @@ In this lab, you will:
 
     ![Plan groups in the default backup plan](./images/full-stack-br-default-backup-plan-groups.png)
 
-3. Before running the backup plan, return to the two workload tabs and record the current **AI jobs completed** value from VM 0 and VM 1. Keep these values as the pre-backup baseline for comparison after the backup and restore operations.
+3. Before running the backup plan, return to the two workload tabs and record the current **AI jobs completed** value from VM 0 and VM 1. In the example run, this value is **483 jobs** on each VM. Use the values displayed in your own VM tabs as the pre-backup baseline for comparison after the backup and restore operations.
 
     ![Synthetic AI workload counters before the backup](./images/synthetic-ai-workload-pre-backup.png)
 
@@ -138,7 +140,7 @@ In this lab, you will:
 
     ![Available Full Stack BR member backups](./images/full-stack-br-member-backups.png)
 
-8. Return to the two workload tabs and record the updated **AI jobs completed** value from VM 0 and VM 1. Compare the values with the pre-backup baseline.
+8. Return to the two workload tabs and record the updated **AI jobs completed** value from VM 0 and VM 1. In the example run, this value is **491 jobs** on each VM. Compare the values with the pre-backup baseline, using the values displayed in your own VM tabs.
 
     ![Synthetic AI workload counters after the backup](./images/synthetic-ai-workload-post-backup.png)
 
@@ -156,9 +158,7 @@ In this lab, you will:
 
     ![Active First recovery point](./images/full-stack-br-recovery-catalog-point.png)
 
-4. Before running the recovery plan, return to the two workload tabs and record the current **AI jobs completed** value from VM 0 and VM 1. Use these values as the pre-recovery baseline.
-
-    ![Synthetic AI workload counters before recovery](./images/synthetic-ai-workload-pre-recovery.png)
+4. After **First recovery point** becomes **Active**, note that the recovery point captures the workload counter at that point in time. The synthetic AI workload completes one job every minute, so the value will vary depending on when the VMs were started and when the recovery point was created. Use the counter values from your own workload tabs as the reference.
 
 5. In the Recovery catalog, select **First recovery point**. Confirm that its state is **Active**, then select **Actions** → **Recover now**.
 
@@ -172,7 +172,17 @@ In this lab, you will:
 
     ![Monitor the recovery plan execution](./images/full-stack-br-recovery-execution-progress.png)
 
-8. Return to the two workload tabs and record the final **AI jobs completed** value from VM 0 and VM 1. Compare the final values with the pre-backup, post-backup, and pre-recovery values to observe workload continuity through the backup and recovery workflow.
+    When all groups show **Succeeded**, confirm that the recovery plan execution is successful.
+
+    ![Recovery plan execution succeeded](./images/full-stack-br-recovery-execution-succeeded.png)
+
+    Expand the execution groups to review the successful operations for both compute instances.
+
+    ![Successful recovery plan execution groups](./images/full-stack-br-recovery-execution-groups-succeeded.png)
+
+8. Return to the two workload tabs and record the final **AI jobs completed** value from VM 0 and VM 1. Because the restore returns the protected resources to **First recovery point** while the scheduler continues to run, the final counter should be approximately aligned with the value captured by the recovery point, but it may not be identical.
+
+    In a realistic production workload, restoring from a recovery point returns the protected resources to the selected point in time according to the recovery requirement. The appropriate recovery point depends on the required recovery objective and the state that must be restored.
 
     ![Synthetic AI workload counters after recovery](./images/synthetic-ai-workload-after-recovery.png)
 

@@ -11,7 +11,9 @@ The workshop focuses on resiliency services rather than application development.
 ### Workshop Tracks
 
 - **OCI Full Stack DR:** Protect the OKE application and Autonomous AI Database across the Ashburn primary region and Phoenix standby region. Configure DR protection groups and plans, execute a Start Drill plan, and validate the recovered AI application in Phoenix.
-- **OCI Full Stack BR:** Protect two OCI compute virtual machines and their shared volume group in Ashburn. Configure the BR protection group and backup policy, review the catalog and BR point, and run a backup and recovery plan.
+- **OCI Full Stack BR:** Protect two Ashburn compute virtual machines. Each VM runs the synthetic AI workload and has its own volume group. Configure the BR protection group and backup policy, review the catalog and recovery point, and run a backup and recovery plan.
+
+**Resiliency note:** This workshop demonstrates resiliency at two levels: Full Stack DR provides cross-region application recovery, while Full Stack BR provides regional backup and recovery. The synthetic AI workload and application validation steps help you observe service continuity and confirm that recovery operations restore the required resources.
 
 Together, these tracks demonstrate cross-region application DR orchestration with Full Stack DR and single-region backup and recovery orchestration with Full Stack BR.
 
@@ -23,7 +25,7 @@ OCI Full Stack DR orchestrates the transition of compute, database, and applicat
 
 **Compute**
 
-- Compute Instances (Including Dedicated VM host)
+- Compute instances (including dedicated VM hosts)
 
 **Oracle Database**
 
@@ -43,7 +45,7 @@ OCI Full Stack DR orchestrates the transition of compute, database, and applicat
 
 - Boot and Block Volumes (Volume Groups)
 - File Systems
-- Object storage bucket
+- Object Storage buckets
 
 **Networking**
 
@@ -65,7 +67,7 @@ In this workshop, Full Stack DR uses replication, prechecks, plans, and executio
 
 OCI Full Stack BR provides coordinated backup and recovery for OCI resources within one region. It protects infrastructure state, backup configuration, member backups, and BR points that form consistent recovery points.
 
-In this workshop, Full Stack BR protects two Ashburn compute virtual machines and their shared volume group. You configure the BR protection group and policy, review the catalog and BR point, and run a backup and recovery plan.
+In this workshop, Full Stack BR protects two Ashburn compute virtual machines and an individual volume group for each VM. You configure the BR protection group and policy, review the catalog and recovery point, and run a backup and recovery plan.
 
 ### How the Services Work Together
 
@@ -107,24 +109,24 @@ The workshop uses a primary OKE and Autonomous AI Database environment in Ashbur
 - The bootstrap script creates the `fsdr-iad-primary` and `fsdr-phx-standby` Kubernetes contexts.
 - The application package validates the frontend, backend, Ollama model service, and Autonomous AI Database connection.
 - The workshop configures cross-region replication before creating the Full Stack DR protection groups and plans.
-- Full Stack BR uses the compute instances and shared volume group to create backups, catalog recovery points, and run backup and recovery plans.
+- Full Stack BR uses the compute instances and their individual volume groups to create backups, catalog recovery points, and run backup and recovery plans.
 
 ### Pre-provisioned Resources
 
 The workshop environment includes the following resources for the two resiliency services:
 
 - **Full Stack DR:** A primary OKE cluster and Autonomous AI Database in Ashburn, a standby OKE cluster and Autonomous AI Database in Phoenix, and Autonomous Data Guard between the databases. Lab 1 creates and configures the Ollama persistent volume group with cross-region replication.
-- **Full Stack BR:** Two compute instances and their shared block volume group in Ashburn. These resources are added to a BR protection group for backup and recovery.
+- **Full Stack BR:** Two compute instances and an individual block volume group for each VM in Ashburn. These resources are added to a BR protection group for backup and recovery.
 
 ## Task 4: Workshop Objectives
 
 - Deploy and validate the cloud-native AI workload.
 - Configure the Full Stack DR resources.
 - Execute plan prechecks and the Full Stack DR Start Drill plan.
-- Monitor DR plan and validate the recovered application.
-- Configure Full Stack Backup Recovery protection groups and backup policies.
-- Review catalogs and BR points as recovery points.
-- Run BR plans and verify their executions.
+- Monitor the Start Drill plan and validate the recovered application.
+- Configure Full Stack BR protection groups and backup policies.
+- Review the Full Stack BR recovery catalog and recovery points.
+- Run Full Stack BR backup and recovery plans and verify their executions.
 - Troubleshoot common policy, context, replication, and application-validation issues.
 
 ## Task 5: Reference Links
