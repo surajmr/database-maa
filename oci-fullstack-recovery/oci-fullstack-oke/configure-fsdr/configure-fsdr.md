@@ -34,31 +34,41 @@ In this lab, you will:
 
 2. Run the Full Stack DR snapshot standby configuration script.
 
-    In the Ashburn Cloud Shell, run:
-
-    ```bash
-    <copy>
-    python3 scripts/configure-fsdr-snapshot-standby.py
-    </copy>
-    ```
-
-    The configuration script in Task 1 runs in interactive pause mode. It stops before every resource-creation step. Review the resources shown, then press **Enter** to continue or type `q` to stop. The script pauses before creating the standby DR protection group, before creating and associating the primary DR protection group, and before creating each plan. Allow the preceding work request to complete before continuing to the next prompt.
-
-    ![Lab 2 snapshot standby script paused before creating the standby DR protection group](./images/fsdr-snapshot-standby-pause-standby.png)
-
-    ![Lab 2 snapshot standby script paused before creating the DR plans](./images/fsdr-snapshot-standby-pause-plans.png)
-
-    The script takes approximately 10 minutes, excluding time spent at the confirmation prompts. While the script is waiting at a prompt or processing a work request, continue to **Task 2: Monitor the Configuration in the OCI Console**. Keep the Ashburn Cloud Shell tab open. Return to Task 1 when the script finishes. Confirm that it returns to the shell prompt and displays the protection group and plan OCIDs. The script performs these actions in order:
+    Before you run the script, review the configuration flow. The script performs these actions in order:
 
     - Creates a DR protection group in the standby region.
     - Adds the standby OKE cluster and standby ATP to the standby DR protection group.
     - Creates the primary DR protection group in the primary region and associates it with the standby DR protection group using the **Primary** role.
     - Adds the primary OKE cluster, primary ATP, and Ollama volume group to the primary DR protection group.
-    - Creates the **Switchover**, **Failover**, and **Start Drill** plans in the standby DR protection group, pausing for confirmation before each plan.
+    - Creates the **Switchover**, **Failover**, and **Start Drill** plans in the standby DR protection group.
 
-    A successful run displays the OCIDs for the primary and standby protection groups and the three plans.
+    In the Ashburn Cloud Shell, run:
 
-    ![Lab 2 snapshot standby script completed with masked OCIDs](./images/fsdr-snapshot-standby-complete.png)
+    ```bash
+    <copy>
+    ./scripts/configure-fsdr-snapshot-standby.sh
+    </copy>
+    ```
+
+    As part of the Full Stack DR configuration experience, you will use the script interactively at each resource-creation phase. It pauses before creating the standby DR protection group, before creating and associating the primary DR protection group, and once before the combined Switchover, Failover, and Start Drill plan-creation phase. At each prompt, review the region and resources listed, then press **Enter** to continue or type `q` to stop. Allow the preceding work request to complete before continuing to the next prompt.
+
+    ![Lab 2 snapshot standby script paused before creating the standby DR protection group](./images/fsdr-snapshot-standby-pause-standby.png)
+
+    After you press **Enter** and the work request completes, the standby DR protection group is created and the standby ATP and OKE cluster are added as members.
+
+    ![Lab 2 snapshot standby script paused before creating the primary DR protection group](./images/fsdr-snapshot-standby-pause-plans.png)
+
+    After you press **Enter** and the work request completes, the primary DR protection group is created, associated with the standby group, and populated with the primary ATP, OKE cluster, and Ollama volume group. The script then pauses again before creating the three DR plans.
+
+    ![Lab 2 snapshot standby script paused before creating the Switchover, Failover, and Start Drill plans](./images/fsdr-snapshot-standby-complete.png)
+
+    Press **Enter** to start creating the Switchover, Failover, and Start Drill plans. Plan creation takes approximately **7–8 minutes**. While the plans are being created, continue to **Task 2: Monitor the Configuration in the OCI Console**. Keep the Ashburn Cloud Shell tab open.
+
+    When the script finishes, return to Task 1. Confirm that it returns to the shell prompt and displays the OCIDs for the primary and standby protection groups and the three DR plans. The complete configuration takes approximately 10 minutes, excluding time spent at the confirmation prompts.
+
+    A successful run displays the OCIDs for the primary and standby protection groups and the three plans, then returns to the shell prompt.
+
+    ![Lab 2 snapshot standby DR plans created successfully](./images/fsdr-snapshot-standby-plans-created.png)
 
 ## Task 2: Monitor the Configuration in the OCI Console
 
@@ -132,11 +142,19 @@ In this lab, you will:
     ![Start Drill plan groups in the standby DR protection group](./images/fsdr-start-drill-plan-groups.png)
 
 
-    **Workshop execution note:** We will run the **Start Drill** plan as part of this workshop in **Lab 3**. Do not execute it in Lab 2.
+    > **Workshop execution note:** We will run the **Start Drill** plan as part of this workshop in **Lab 3**. Do not execute it in Lab 2.
 
-    **Stop Drill note:** After the **Start Drill** plan completes successfully, Full Stack DR allows you to create a **Stop Drill** plan to end the drill and restore the environment. Creating or running a **Stop Drill** plan is not part of this workshop.
+    > ---
+
+    > **Stop Drill note:** After the **Start Drill** plan completes successfully, Full Stack DR allows you to create a **Stop Drill** plan to end the drill and restore the environment. Creating or running a **Stop Drill** plan is not part of this workshop.
+
+    > ---
+
+    > **DR Protection group role note:** Executing a successful **Switchover** or **Failover** plan changes the roles of the DR protection groups. After the role change, you can create Switchover and Failover plans in the new standby DR protection group. Executing a **Start Drill** or **Stop Drill** plan does not change the roles of the DR protection groups.
 
     Do not click **Start**, **Execute**, or **Run Prechecks** for any plan in Lab 2. The **Start Drill** plan is executed in Lab 3.
+
+In Lab 3, you will run prechecks and execute the **Start Drill** plan, then monitor the drill execution until it succeeds.
 
 You may now [proceed to the next lab](#next).
 

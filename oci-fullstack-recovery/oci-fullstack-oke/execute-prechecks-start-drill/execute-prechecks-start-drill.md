@@ -78,7 +78,7 @@ In this lab, you will:
 
     ![Start Drill plan execution group task progress](./images/start-drill-execution-task-progress.png)
 
-    The Start Drill plan typically takes 15–20 minutes. While it runs, you may begin **Lab 5: Configure and Execute Full Stack Backup and Recovery** in a separate tab. Do not start Lab 4 until the Start Drill completes successfully.
+    **While it runs, you must begin Lab 5: Configure and Execute Full Stack Backup Recovery in a separate tab. Do not start Lab 4 until the Start Drill completes successfully.**
 
 5. Continue expanding plan groups as they run. Monitor each task state and review any warning, failure, or skipped task before you retry or change configuration.
 
@@ -101,6 +101,8 @@ In this lab, you will:
 8. After a Start Drill completes, you can create and run a **Stop Drill** plan to convert the application stack back to its state before the drill. Creating or running a Stop Drill plan is outside the scope of this workshop; leave the drill active for Lab 4.
 
     A successful **Switchover** or **Failover** plan changes the role of the DR protection group. A **Start Drill** does not change that role; it keeps the protection group in its standby role while the drill runs.
+
+    In Lab 4, you will validate the AI application in the Phoenix region while the Start Drill remains active, including its frontend, backend, database connection, and RAG response.
 
     You may now [proceed to the next lab](#next).
 

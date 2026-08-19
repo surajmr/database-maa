@@ -93,7 +93,7 @@ In this lab, you will:
     </copy>
     ```
 
-    When prompted, enter these values. Passwords remain hidden. Press **Enter** after each value.
+    When prompted, enter these values. Passwords remain hidden. Enter each password twice so the script can catch typing mistakes before deployment begins. Press **Enter** after each value.
 
     - Database username: `ADMIN`
     - Database password: `AIWorld2026!`
@@ -106,7 +106,7 @@ In this lab, you will:
 
 2. Monitor the deployment. It takes approximately 3–4 minutes.
 
-    If an error occurs, verify the values from Step 1 and rerun the step.
+    If deployment fails, the script explains the likely cause and asks whether you want to retry. Choose whether to replace the ADB password, wallet password, or both. The existing Kubernetes resources are reused; cleanup is not required. The script allows up to three attempts. If you stop or use all attempts, verify the ADB username, ADB password, wallet password, selected ATP, and wallet, then rerun `./bootstrap-ai-fsdr-lab.sh`.
 
     ![Monitor AI application deployment](./images/monitor-ai-application-deployment-1.png)
 
@@ -171,6 +171,8 @@ In this lab, you will:
     Confirm that the application accepts the document and returns a context-grounded response using RAG from the uploaded documentation. The response should reflect information from the document you uploaded.
     
     ![Validate AI response with RAG](./images/validate-ai-response-with-rag.png)
+
+In Lab 2, you will configure OCI Full Stack Disaster Recovery for this AI workload, including the primary and standby DR protection groups and their recovery plans.
 
 You may now [proceed to the next lab](#next).
 

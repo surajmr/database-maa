@@ -97,6 +97,8 @@ In this lab, you will:
 
 You have completed the OCI Full Stack Disaster Recovery lab. You deployed and validated the AI workload, configured snapshot standby protection, executed a Start Drill, and validated the recovered Phoenix application with RAG.
 
+In Lab 5, you will configure Full Stack Backup Recovery for the Ashburn compute instances and volume group, then review the backup policy, BR point, and plan execution.
+
 You may now [proceed to the next lab](#next).
 
 ## Acknowledgements
