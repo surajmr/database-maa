@@ -148,17 +148,17 @@ In this lab, you will:
 
     **What is OCI Full Stack Disaster Recovery?**
 
-    Confirm that Ollama returns a response without retrieval-augmented generation (RAG) context. The model should not reference an uploaded document.
+    Confirm that the AI inference service returns a response without retrieval-augmented generation (RAG) context. The model should not reference an uploaded document.
 
     ![Primary Ashburn AI workload showing healthy services and connected database](./images/validate-ai-application-primary.png)
 
-    Confirm that the application shows **Active DB region** and **Connected DB region** as `us-ashburn-1`. Confirm that the API, Autonomous DB, and Ollama statuses show **ok** or **up**.
+    Confirm that the application shows **Active DB region** and **Connected DB region** as `us-ashburn-1`. Confirm that the API, Autonomous DB, and AI inference service statuses show **ok** or **up**.
 
     ![Validate AI response without RAG](./images/validate-ai-response-without-rag.png)
 
 2. Test the document retrieval experience.
 
-    Download the [OCI Full Stack Disaster Recovery official documentation](https://docs.oracle.com/en/cloud/iaas/disaster-recovery/cssgm/using-oracle-cloud-infrastructure-full-stack-disaster-recovery.pdf) to your local computer, not to Cloud Shell.
+    Download the [OCI Full Stack Disaster Recovery official documentation](https://c4u02.objectstorage.us-ashburn-1.oci.customer-oci.com/p/9DEArLjsgbKXuJgQtSG95E8hMXRFtxgHR8jiHbqz4HgyVYXVnSo0SC_s-zq5CJA3/n/c4u02/b/hosted-files/o/OCI%20Full%20Stack%20DR%20doc.pdf) to your local computer, not to Cloud Shell.
 
     Return to the AI application and upload the PDF. The application processes the document and stores its embeddings as vectors in Oracle AI Database 26ai.
 

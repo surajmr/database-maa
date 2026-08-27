@@ -4,7 +4,7 @@
 
 In this workshop, you learn how Oracle Cloud Infrastructure (OCI) Full Stack Disaster Recovery (Full Stack DR) and OCI Full Stack Backup Recovery (Full Stack BR) protect and recover different parts of a resilient AI environment.
 
-The workload is an AI Retrieval-Augmented Generation (RAG) application deployed on Oracle Kubernetes Engine (OKE). It includes a web frontend, FastAPI backend, Ollama model service, persistent application storage, and Oracle Autonomous AI Database connectivity.
+The workload is an AI Retrieval-Augmented Generation (RAG) application deployed on Oracle Kubernetes Engine (OKE). It includes a web frontend, FastAPI backend, AI inference service, persistent application storage, and Oracle Autonomous AI Database connectivity.
 
 The workshop focuses on resiliency services rather than application development. You first deploy the supplied AI workload and then complete two related tracks.
 
@@ -93,7 +93,7 @@ Estimated Workshop Time: 90 minutes
 
 ## Task 2: Workshop Architecture
 
-The workshop uses a primary OKE and Autonomous AI Database environment in Ashburn and a standby recovery environment in Phoenix. Autonomous Data Guard protects the databases, and cross-region volume replication protects the Ollama persistent volume. Full Stack DR coordinates the application, storage, database, and validation workflow. Full Stack BR provides regional backup and recovery for protected compute and volume resources.
+The workshop uses a primary OKE and Autonomous AI Database environment in Ashburn and a standby recovery environment in Phoenix. Autonomous Data Guard protects the databases, and cross-region volume replication protects the AI workload persistent volume. Full Stack DR coordinates the application, storage, database, and validation workflow. Full Stack BR provides regional backup and recovery for protected compute and volume resources.
 
 ### Full Stack Disaster Recovery
 
@@ -107,7 +107,7 @@ The workshop uses a primary OKE and Autonomous AI Database environment in Ashbur
 
 - The workshop uses Ashburn as the primary region and Phoenix as the standby region.
 - The bootstrap script creates the `fsdr-iad-primary` and `fsdr-phx-standby` Kubernetes contexts.
-- The application package validates the frontend, backend, Ollama model service, and Autonomous AI Database connection.
+- The application package validates the frontend, backend, AI inference service, and Autonomous AI Database connection.
 - The workshop configures cross-region replication before creating the Full Stack DR protection groups and plans.
 - Full Stack BR uses the compute instances and their individual volume groups to create backups, catalog recovery points, and run backup and recovery plans.
 
@@ -115,7 +115,7 @@ The workshop uses a primary OKE and Autonomous AI Database environment in Ashbur
 
 The workshop environment includes the following resources for the two resiliency services:
 
-- **Full Stack DR:** A primary OKE cluster and Autonomous AI Database in Ashburn, a standby OKE cluster and Autonomous AI Database in Phoenix, and Autonomous Data Guard between the databases. Lab 1 creates and configures the Ollama persistent volume group with cross-region replication.
+- **Full Stack DR:** A primary OKE cluster and Autonomous AI Database in Ashburn, a standby OKE cluster and Autonomous AI Database in Phoenix, and Autonomous Data Guard between the databases. Lab 1 creates and configures the AI workload persistent volume group with cross-region replication.
 - **Full Stack BR:** Two compute instances and an individual block volume group for each VM in Ashburn. These resources are added to a BR protection group for backup and recovery.
 
 ## Task 4: Workshop Objectives

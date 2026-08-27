@@ -39,7 +39,7 @@ In this lab, you will:
     - Creates a DR protection group in the standby region.
     - Adds the standby OKE cluster and standby ATP to the standby DR protection group.
     - Creates the primary DR protection group in the primary region and associates it with the standby DR protection group using the **Primary** role.
-    - Adds the primary OKE cluster, primary ATP, and Ollama volume group to the primary DR protection group.
+    - Adds the primary OKE cluster, primary ATP, and AI workload volume group to the primary DR protection group.
     - Creates the **Switchover**, **Failover**, and **Start Drill** plans in the standby DR protection group.
 
     In the Ashburn Cloud Shell, run:
@@ -58,7 +58,7 @@ In this lab, you will:
 
     ![Lab 2 snapshot standby script paused before creating the primary DR protection group](./images/fsdr-snapshot-standby-pause-plans.png)
 
-    After you press **Enter** and the work request completes, the primary DR protection group is created, associated with the standby group, and populated with the primary ATP, OKE cluster, and Ollama volume group. The script then pauses again before creating the three DR plans.
+    After you press **Enter** and the work request completes, the primary DR protection group is created, associated with the standby group, and populated with the primary ATP, OKE cluster, and AI workload volume group. The script then pauses again before creating the three DR plans.
 
     ![Lab 2 snapshot standby script paused before creating the Switchover, Failover, and Start Drill plans](./images/fsdr-snapshot-standby-complete.png)
 
@@ -91,7 +91,7 @@ In this lab, you will:
 
 4. As the configuration progresses, verify that the protection groups contain the expected AI workload resources as members.
 
-    - In the Ashburn region, select `fsdr-rag-primary-xxxxx` and open the **Members** tab. Confirm that it contains the primary OKE cluster, primary ATP, and Ollama block volume group.
+    - In the Ashburn region, select `fsdr-rag-primary-xxxxx` and open the **Members** tab. Confirm that it contains the primary OKE cluster, primary ATP, and AI workload block volume group.
 
     ![Ashburn Full Stack DR protection groups members](./images/ashburn-full-stack-dr-protection-groups-members.png)
 

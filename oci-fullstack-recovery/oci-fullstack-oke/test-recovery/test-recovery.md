@@ -76,7 +76,7 @@ In this lab, you will:
 
 1. Open the recovered application URL in a separate browser tab.
 
-2. Confirm that the frontend loads and that the backend, Phoenix Autonomous AI Database, and Ollama health indicators are available.
+2. Confirm that the frontend loads and that the backend, Phoenix Autonomous AI Database, and AI inference service health indicators are available.
 
     In the chat window, enter:
 
