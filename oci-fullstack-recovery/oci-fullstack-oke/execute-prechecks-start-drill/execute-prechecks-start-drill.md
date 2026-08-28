@@ -78,6 +78,10 @@ In this lab, you will:
 
     ![Start Drill plan execution group task progress](./images/start-drill-execution-task-progress.png)
 
+    **Note:** Any plan group can take additional time to complete. This is expected. Based on the member and task type in each plan group, Full Stack DR invokes the corresponding underlying service API and waits for that operation to finish before continuing. For example, the **Autonomous Databases - Start Drill - Convert to Snapshot Standby** task invokes the Autonomous Database APIs and may take several minutes. In this example, the operation completed in approximately 18 minutes, but it may sometimes complete in 5–8 minutes. To check detailed progress for a service operation, open the relevant task and review its **Work requests** details when available. Use the work request status and messages to monitor progress and check for errors. Wait for the task to show **Succeeded** before expecting the next plan group to proceed.
+
+    ![Start Drill execution showing Autonomous Database snapshot standby conversion completed while OKE restore remains in progress](./images/autonomous-database-snapshot-standby-in-progress.png)
+
     **While it runs, you must begin Lab 5: Configure and Execute Full Stack Backup Recovery in a separate tab. Do not start Lab 4 until the Start Drill completes successfully.**
 
 5. Continue expanding plan groups as they run. Monitor each task state and review any warning, failure, or skipped task before you retry or change configuration.
