@@ -96,7 +96,7 @@ In this lab, you will:
 
     ![Start Drill execution details showing a successful execution and duration](./images/start-drill-execution-succeeded-details.png)
 
-    This execution took approximately 17 minutes. Treat this as an observation, not a guarantee. Execution time varies with service state and workload. Full Stack DR coordinates the underlying service APIs but does not directly control the Recovery Time Objective (RTO). For the Recovery Point Objective (RPO), consult the guidance for each service. Replication lag, snapshot timing, and backup policies determine data currency.
+    In this example, the execution took approximately 16 minutes. Treat this as an observation, not a guarantee. Execution time varies with service state and workload. Full Stack DR coordinates the underlying service APIs but does not directly control the Recovery Time Objective (RTO). For the Recovery Point Objective (RPO), consult the guidance for each service. Replication lag, snapshot timing, and backup policies determine data currency.
 
 7. Return to the standby DR protection group and confirm that its header shows **Inactive (Drill in progress)** and **Role: Standby**. On the **Plans** tab, confirm that the Start Drill, Failover, and Switchover plans show **Inactive** while the drill remains active.
 
@@ -113,4 +113,4 @@ In this lab, you will:
 ## Acknowledgements
 
 * **Author** - Suraj Ramesh, Lead Principal Product Manager, Oracle Database High Availability (HA), Scalability and Maximum Availability Architecture (MAA)
-* **Last Updated By/Date** - August 2026
+* **Last Updated By/Date** - September 2026

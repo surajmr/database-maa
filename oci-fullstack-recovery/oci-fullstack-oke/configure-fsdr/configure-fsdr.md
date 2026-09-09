@@ -70,7 +70,7 @@ In this lab, you will:
 
     ![Lab 2 snapshot standby DR plans created successfully](./images/fsdr-snapshot-standby-plans-created.png)
 
-## Task 2: Monitor the Configuration in the OCI Console
+## Task 2: Monitor the Full Stack DR Configuration in the OCI Console
 
 1. While the script runs, open two additional OCI Console tabs. Set one to **Ashburn** and the other to **Phoenix**. Keep the Ashburn Cloud Shell tab open. In each Console tab, select **Migration & Recovery**, then **Recovery**, and then **Disaster Recovery**.
 
@@ -91,7 +91,7 @@ In this lab, you will:
 
 4. As the configuration progresses, verify that the protection groups contain the expected AI workload resources as members.
 
-    - In the Ashburn region, select `fsdr-rag-primary-xxxxxx` and open the **Members** tab. Confirm that it contains the primary OKE cluster, primary ATP, and AI workload block volume group.
+    - In the Ashburn region, select `fsdr-rag-primary-xxxxxx` and open the **Members** tab. Confirm that it contains the primary OKE cluster, primary ATP, and Ollama volume group.
 
     ![Ashburn Full Stack DR protection groups members](./images/ashburn-full-stack-dr-protection-groups-members.png)
 
@@ -110,6 +110,8 @@ In this lab, you will:
     | Switchover | `fsdr-rag-xxxxxx-switchover` |
     | Failover | `fsdr-rag-xxxxxx-failover` |
     | Start Drill | `fsdr-rag-xxxxxx-start-drill` |
+
+    **Note:** Full Stack DR allows you to create and execute DR plans only from the DR protection group with the **Standby** role.
 
     The `xxxxxx` portion is generated for your environment and may differ from the example.
 
@@ -141,16 +143,22 @@ In this lab, you will:
 
     ![Start Drill plan groups in the standby DR protection group](./images/fsdr-start-drill-plan-groups.png)
 
+    The **Start Drill** plan runs built-in prechecks, restores the Ollama volume group for the drill, converts the standby Autonomous Database to a snapshot standby, and restores the standby OKE cluster. These steps create a recovery test environment without changing the production roles of the DR protection groups.
 
-    > **Workshop execution note:** We will run the **Start Drill** plan as part of this workshop in **Lab 3**. Do not execute it in Lab 2.
 
-    > ---
-
-    > **Stop Drill note:** After the **Start Drill** plan completes successfully, Full Stack DR allows you to create a **Stop Drill** plan to end the drill and restore the environment. Creating or running a **Stop Drill** plan is not part of this workshop.
+    > **Workshop execution:** We will run the **Start Drill** plan as part of this workshop in **Lab 3**. Do not execute it in Lab 2.
 
     > ---
 
-    > **DR Protection group role note:** Executing a successful **Switchover** or **Failover** plan changes the roles of the DR protection groups. After the role change, you can create Switchover and Failover plans in the new standby DR protection group. Executing a **Start Drill** or **Stop Drill** plan does not change the roles of the DR protection groups.
+    > **Stop Drill:** After the **Start Drill** plan completes successfully, Full Stack DR allows you to create a **Stop Drill** plan to end the drill and restore the environment. Creating or running a **Stop Drill** plan is not part of this workshop.
+
+    > ---
+
+    > **DR protection group roles:** Executing a successful **Switchover** or **Failover** plan changes the roles of the DR protection groups. After the role change, you can create Switchover and Failover plans in the new standby DR protection group. Executing a **Start Drill** or **Stop Drill** plan does not change the roles of the DR protection groups.
+
+    > ---
+
+    > **User-defined plan groups:** Full Stack DR allows you to customize plans with user-defined plan groups. You can add your own scripts or OCI Functions alongside the built-in plan groups, or create a plan containing only user-defined plan groups. This workshop does not customize the DR plans with user-defined plan groups. To configure them, use **Manage plan groups**.
 
     Do not click **Start**, **Execute**, or **Run Prechecks** for any plan in Lab 2. The **Start Drill** plan is executed in Lab 3.
 
@@ -161,4 +169,4 @@ You may now [proceed to the next lab](#next).
 ## Acknowledgements
 
 * **Author** - Suraj Ramesh, Lead Principal Product Manager, Oracle Database High Availability (HA), Scalability and Maximum Availability Architecture (MAA)
-* **Last Updated By/Date** - August 2026
+* **Last Updated By/Date** - September 2026

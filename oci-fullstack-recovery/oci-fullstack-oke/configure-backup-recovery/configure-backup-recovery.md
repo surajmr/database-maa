@@ -29,8 +29,8 @@ In this lab, you will:
 
 1. In the **Ashburn** region, open the OCI Console navigation menu and select **Compute**, then **Instances**. In the compartment assigned to you, locate these two compute instances:
 
-    - `fsr-rag-recovery-vm-0`
-    - `fsr-rag-recovery-vm-1`
+    - `fsr-ai-app-recovery-vm-0`
+    - `fsr-ai-app-recovery-vm-1`
 
     Open each instance and copy its **Public IP address**.
 
@@ -78,8 +78,6 @@ In this lab, you will:
 
     ![Full Stack BR members added and activation started](./images/full-stack-br-members-activation.png)
 
-    ![Full Stack BR protection group members created](./images/full-stack-br-members-created.png)
-
     ![Full Stack BR protection activated successfully](./images/full-stack-br-activation-complete.png)
 
 4. Monitor the script output until it returns successfully. Record the Full Stack BR protection group, backup policy, plan, and execution identifiers that it reports. You will create or review member backups, recovery points, and recovery-plan executions in the OCI Console in the following tasks.
@@ -96,8 +94,8 @@ In this lab, you will:
 
 3. Open the **Members** tab. Confirm that the protection group contains:
 
-    - Compute VM 1.
-    - Compute VM 2.
+    - `fsr-ai-app-recovery-vm-0`.
+    - `fsr-ai-app-recovery-vm-1`.
     - The individual volume group attached to each compute instance.
 
     ![Members of the Full Stack BR protection group](./images/full-stack-br-members.png)
@@ -138,6 +136,8 @@ In this lab, you will:
 
 7. Open the **Member backups** tab for the Full Stack BR protection group. Confirm that backups are available for both compute instances and both individual volume groups.
 
+    Wait a minute or so for all four member backups to appear with an **Active** status.
+
     ![Available Full Stack BR member backups](./images/full-stack-br-member-backups.png)
 
 8. Return to the two workload tabs and record the updated **AI jobs completed** value from VM 0 and VM 1. In the example run, this value is **491 jobs** on each VM. Compare the values with the pre-backup baseline, using the values displayed in your own VM tabs.
@@ -172,6 +172,10 @@ In this lab, you will:
 
     ![Monitor the recovery plan execution](./images/full-stack-br-recovery-execution-progress.png)
 
+    As soon as the **Compute Instances - Start** group completes successfully, return to the two workload tabs and check the **AI jobs completed** counter on both VMs. Compare the counters with the value captured by **First recovery point**. The values should be approximately aligned with the recovery point, although the workload may complete another job while the remaining recovery steps finish.
+
+    ![VM workload counters after compute instances restart](./images/synthetic-ai-workload-after-recovery.png)
+
     When all groups show **Succeeded**, confirm that the recovery plan execution is successful.
 
     ![Recovery plan execution succeeded](./images/full-stack-br-recovery-execution-succeeded.png)
@@ -180,11 +184,7 @@ In this lab, you will:
 
     ![Successful recovery plan execution groups](./images/full-stack-br-recovery-execution-groups-succeeded.png)
 
-8. Return to the two workload tabs and record the final **AI jobs completed** value from VM 0 and VM 1. Because the restore returns the protected resources to **First recovery point** while the scheduler continues to run, the final counter should be approximately aligned with the value captured by the recovery point, but it may not be identical.
-
-    In a realistic production workload, restoring from a recovery point returns the protected resources to the selected point in time according to the recovery requirement. The appropriate recovery point depends on the required recovery objective and the state that must be restored.
-
-    ![Synthetic AI workload counters after recovery](./images/synthetic-ai-workload-after-recovery.png)
+8. After the recovery plan completes, review the final **AI jobs completed** values on both workload tabs. The counters may be slightly higher than the recovery-point value because the scheduler resumes as the VMs restart. In a production workload, the selected recovery point determines the state restored according to the recovery requirement.
 
 ## Conclusion
 
@@ -195,4 +195,4 @@ Together, OCI Full Stack DR and OCI Full Stack BR help you protect, recover, and
 ## Acknowledgements
 
 * **Author** - Suraj Ramesh, Lead Principal Product Manager, Oracle Database High Availability (HA), Scalability and Maximum Availability Architecture (MAA)
-* **Last Updated By/Date** - August 2026
+* **Last Updated By/Date** - September 2026
