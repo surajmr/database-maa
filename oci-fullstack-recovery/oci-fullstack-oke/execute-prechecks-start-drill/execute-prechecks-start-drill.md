@@ -26,9 +26,9 @@ In this lab, you will:
 
 1. In the Phoenix OCI Console, select your assigned compartment. Open the navigation menu. Select **Migration & Recovery**, then **Recovery**, and then **Disaster Recovery**.
 
-2. Select **DR Protection groups**, open **fsdr-rag-standby-xxxxx**, and navigate to the **Plans** tab. The `xxxxx` suffix is unique to your environment.
+2. Select **DR Protection groups**, open **fsdr-rag-standby-xxxxxx**, and navigate to the **Plans** tab. The `xxxxxx` suffix is unique to your environment.
 
-3. Select **fsdr-rag-xxxxx-start-drill**. Confirm the **Start Drill** type and the standby DR protection group.
+3. Select **fsdr-rag-xxxxxx-start-drill**. Confirm the **Start Drill** type and the standby DR protection group.
 
 4. Click **Actions**, select **Run prechecks**, and confirm the action if the Console prompts you. Wait for the precheck execution to finish.
 
@@ -56,7 +56,7 @@ In this lab, you will:
 
 ## Task 2: Execute and Monitor the Start Drill Plan
 
-1. Return to the **fsdr-rag-xxxxx-start-drill** plan. Open **Actions** and select **Execute plan**.
+1. Return to the **fsdr-rag-xxxxxx-start-drill** plan. Open **Actions** and select **Execute plan**.
 
     ![Actions menu with Execute plan selected for the Start Drill plan](./images/start-drill-actions-execute-plan.png)
 

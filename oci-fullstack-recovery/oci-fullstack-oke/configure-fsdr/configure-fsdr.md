@@ -39,7 +39,7 @@ In this lab, you will:
     - Creates a DR protection group in the standby region.
     - Adds the standby OKE cluster and standby ATP to the standby DR protection group.
     - Creates the primary DR protection group in the primary region and associates it with the standby DR protection group using the **Primary** role.
-    - Adds the primary OKE cluster, primary ATP, and AI workload volume group to the primary DR protection group.
+    - Adds the primary OKE cluster, primary ATP, and Ollama volume group to the primary DR protection group.
     - Creates the **Switchover**, **Failover**, and **Start Drill** plans in the standby DR protection group.
 
     In the Ashburn Cloud Shell, run:
@@ -58,7 +58,7 @@ In this lab, you will:
 
     ![Lab 2 snapshot standby script paused before creating the primary DR protection group](./images/fsdr-snapshot-standby-pause-plans.png)
 
-    After you press **Enter** and the work request completes, the primary DR protection group is created, associated with the standby group, and populated with the primary ATP, OKE cluster, and AI workload volume group. The script then pauses again before creating the three DR plans.
+    After you press **Enter** and the work request completes, the primary DR protection group is created, associated with the standby group, and populated with the primary ATP, OKE cluster, and Ollama volume group. The script then pauses again before creating the three DR plans.
 
     ![Lab 2 snapshot standby script paused before creating the Switchover, Failover, and Start Drill plans](./images/fsdr-snapshot-standby-complete.png)
 
@@ -78,12 +78,12 @@ In this lab, you will:
 
 3. Open **DR Protection groups** in each Console tab and monitor the pages as the primary and standby protection groups are created. Refresh the Console tabs periodically if the resources do not appear immediately; do not refresh the Cloud Shell tab. Verify the region-specific names:
 
-    - **Ashburn:** `fsdr-rag-primary-xxxxx`
-    - **Phoenix:** `fsdr-rag-standby-xxxxx`
+    - **Ashburn:** `fsdr-rag-primary-xxxxxx`
+    - **Phoenix:** `fsdr-rag-standby-xxxxxx`
 
-    The `xxxxx` suffix is generated for your environment and may differ from the examples.
+    The `xxxxxx` suffix is generated for your environment and may differ from the examples.
 
-    Verify the protection group roles. The `fsdr-rag-primary-xxxxx` protection group shows the **Primary** role, and the `fsdr-rag-standby-xxxxx` protection group shows the **Standby** role.
+    Verify the protection group roles. The `fsdr-rag-primary-xxxxxx` protection group shows the **Primary** role, and the `fsdr-rag-standby-xxxxxx` protection group shows the **Standby** role.
 
     ![Ashburn Full Stack DR protection groups](./images/ashburn-full-stack-dr-protection-groups.png)
 
@@ -91,11 +91,11 @@ In this lab, you will:
 
 4. As the configuration progresses, verify that the protection groups contain the expected AI workload resources as members.
 
-    - In the Ashburn region, select `fsdr-rag-primary-xxxxx` and open the **Members** tab. Confirm that it contains the primary OKE cluster, primary ATP, and AI workload block volume group.
+    - In the Ashburn region, select `fsdr-rag-primary-xxxxxx` and open the **Members** tab. Confirm that it contains the primary OKE cluster, primary ATP, and AI workload block volume group.
 
     ![Ashburn Full Stack DR protection groups members](./images/ashburn-full-stack-dr-protection-groups-members.png)
 
-    - In the Phoenix region, select `fsdr-rag-standby-xxxxx` and open the **Members** tab. Confirm that it contains the standby OKE cluster and standby ATP.
+    - In the Phoenix region, select `fsdr-rag-standby-xxxxxx` and open the **Members** tab. Confirm that it contains the standby OKE cluster and standby ATP.
 
     ![Phoenix Full Stack DR protection groups members](./images/phoenix-full-stack-dr-protection-groups-members.png)
 
@@ -107,11 +107,11 @@ In this lab, you will:
 
     | Plan type | Plan name |
     | --- | --- |
-    | Switchover | `fsdr-rag-xxxxx-switchover` |
-    | Failover | `fsdr-rag-xxxxx-failover` |
-    | Start Drill | `fsdr-rag-xxxxx-start-drill` |
+    | Switchover | `fsdr-rag-xxxxxx-switchover` |
+    | Failover | `fsdr-rag-xxxxxx-failover` |
+    | Start Drill | `fsdr-rag-xxxxxx-start-drill` |
 
-    The `xxxxx` portion is generated for your environment and may differ from the example.
+    The `xxxxxx` portion is generated for your environment and may differ from the example.
 
 6. Open each plan and review its task groups. Expand the groups to understand the order of operations. Do not start or execute a plan.
 

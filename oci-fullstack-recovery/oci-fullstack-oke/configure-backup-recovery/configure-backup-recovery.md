@@ -88,7 +88,7 @@ In this lab, you will:
 
 1. In the Ashburn OCI Console, open the navigation menu and select **Migration & Recovery**, then **Backup Recovery**.
 
-    Confirm that the **Backup Recovery** protection-group page is open and that the Full Stack BR protection group created by the script appears in the assigned compartment. Its name follows the pattern `fsbr-vm-vg-xxxxx`, where `xxxxx` is generated for your environment.
+    Confirm that the **Backup Recovery** protection-group page is open and that the Full Stack BR protection group created by the script appears in the assigned compartment. Its name follows the pattern `fsbr-vm-vg-xxxxxx`, where `xxxxxx` is generated for your environment.
 
     ![Full Stack BR protection group in the Ashburn region](./images/full-stack-br-protection-groups.png)
 
