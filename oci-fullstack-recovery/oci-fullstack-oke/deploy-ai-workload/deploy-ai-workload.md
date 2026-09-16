@@ -166,21 +166,21 @@ In this lab, you will:
 
     **What is OCI Full Stack Disaster Recovery?**
 
-    Confirm that the application returns a generic response based on the model, without retrieval-augmented generation (RAG) context. The response should not reference an uploaded document.
+    Confirm that Granite responds. The application includes two short sample documents about Full Stack DR and this lab, loaded during deployment. These provide basic context for the first answer.
 
-    **RAG note:** Retrieval-augmented generation (RAG) combines information retrieved from an uploaded document with the AI model's knowledge to generate a context-grounded response. RAG is not used for this first response because no document has been uploaded and indexed yet.
+    **RAG note:** The application retrieves relevant document text and passes it to Granite to help generate an answer. Both steps use this process: first with basic sample context, then with context from the uploaded documentation.
 
     ![Primary Ashburn AI workload showing healthy services and connected database](./images/validate-ai-application-primary.png)
 
     Confirm that the application shows **Active DB region** and **Connected DB region** as `us-ashburn-1`. Confirm that the API, Autonomous AI Database, and Ollama statuses show **ok** or **up**, and that the model is `granite4.1:3b`.
 
-    ![Validate AI response without RAG](./images/validate-ai-response-without-rag.png)
+    ![Validate Granite response using seeded-document context](./images/validate-ai-response-without-rag.png)
 
 2. Test the document retrieval experience.
 
     Download the [OCI Full Stack Disaster Recovery official documentation](https://c4u02.objectstorage.us-ashburn-1.oci.customer-oci.com/p/9DEArLjsgbKXuJgQtSG95E8hMXRFtxgHR8jiHbqz4HgyVYXVnSo0SC_s-zq5CJA3/n/c4u02/b/hosted-files/o/OCI%20Full%20Stack%20DR%20doc.pdf) to your local computer, not to Cloud Shell.
 
-    Return to the AI application and upload the PDF. Select the file, click **Upload & Index**, and wait for the confirmation that the document was indexed into Autonomous AI Database. The application processes the document and stores its chunks and embeddings for RAG retrieval.
+    Return to the AI application and upload the PDF. Select the file, click **Upload & Index**, and wait for the confirmation that the document was indexed into Autonomous AI Database. The application splits the document into text chunks and stores them in Autonomous AI Database. It uses keyword scoring to select relevant chunks as context for Granite.
 
     ![Upload FSDR documentation](./images/upload-fsdr-doc.png)
     
@@ -188,9 +188,9 @@ In this lab, you will:
 
     **What is OCI Full Stack Disaster Recovery?**
 
-    Confirm that the application accepts the document and returns a context-grounded response using RAG from the uploaded documentation. The response should be based on both the document and the Granite model, and should reflect information from the document you uploaded.
+    Check the source filenames and excerpts to confirm that the uploaded documentation was used as context for Granite. The generated wording may vary. In Lab 4, you will repeat this check in Phoenix without uploading the document again.
 
-    ![Validate AI response with RAG](./images/validate-ai-response-with-rag.png)
+    ![Validate Granite response using uploaded-document context](./images/validate-ai-response-with-rag.png)
 
     **Follow-up questions:** You can ask additional questions about OCI Full Stack Disaster Recovery and verify that the responses continue to use relevant information from the uploaded documentation.
 

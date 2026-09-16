@@ -10,7 +10,7 @@ Complete Lab 3 and wait for the Start Drill plan to finish successfully before s
 
 The restored application runs in the `ai-fsdr-lab` namespace on the Phoenix standby OKE cluster. Use `kubectl -n ai-fsdr-lab` for application checks and troubleshooting.
 
-The FSDR document uploaded in Ashburn is already available in Phoenix. Autonomous Data Guard synchronizes its chunks and embeddings. During the drill, the Phoenix snapshot standby accepts application connections. The recovered application can query the existing RAG data without another upload.
+The FSDR document uploaded in Ashburn is already available in Phoenix. Autonomous Data Guard synchronizes the stored document data, including its text chunks. During the drill, the Phoenix snapshot standby accepts application connections. The recovered application uses keyword scoring to retrieve the existing document chunks as context for Granite, without another upload.
 
 Estimated Time: 10 minutes
 
@@ -82,7 +82,7 @@ In this lab, you will:
 
     **What is OCI Full Stack Disaster Recovery?**
 
-    Confirm that the application returns a response using RAG from the document chunks already present in the Phoenix database.
+    Ask the question without uploading the document again. Confirm that Granite responds and that the source filenames and excerpts include the documentation uploaded in Lab 1. This verifies that the recovered application can use the document data in Phoenix.
 
     ![Phoenix AI workload showing healthy services, connected Phoenix database, and a RAG response](./images/phoenix-ai-workload-rag-validation.png)
 
