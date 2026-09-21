@@ -155,50 +155,54 @@ In this lab, you will:
     ```
     ![Application details](./images/application-details.png)
 
-    Click the **Application URL** displayed in the output of Step 4 or copy the `ai-frontend` service's **External IP** value and open it in a separate browser tab. This is the application URL. If no external IP appears, wait a few moments and run the command again. You will validate the application in the next task.
+    Click the **Application URL** displayed in the output of Step 2 or copy the `ai-frontend` service's **External IP** value and open it in a separate browser tab. This is the application URL. If no external IP appears, wait a few moments and run the command again. You will validate the application in the next task.
 
 
-## Task 3: Validate the AI Application
+## Task 3: Validate the AI Application Without and With RAG
 
 1. Open the application URL in a separate browser tab. The URL may take a short time to become reachable after the External IP is assigned.
 
-    In the chat window, enter the following question:
+    Confirm that **Active DB region** and **Connected DB region** show `us-ashburn-1`. Check that the API, Autonomous DB, and Ollama statuses show **ok** or **up**, and that the model is `granite4.1:3b`.
+
+    ![Primary Ashburn application showing healthy services and the Granite model](./images/validate-ai-application-primary.png)
+
+    Under **ADB-backed documents**, confirm that **No documents yet** appears. Leave **Use uploaded documents when available** checked. With no documents available, the application sends your question directly to Granite without retrieved context.
+
+    In **Chat with Granite**, enter the following question and click **Ask**:
 
     **What is OCI Full Stack Disaster Recovery?**
 
-    Confirm that Granite responds. The application includes two short sample documents about Full Stack DR and this lab, loaded during deployment. These provide basic context for the first answer.
+    **Response time:** Each response may take about a minute because this demo application runs on an OKE cluster with a small node pool and limited compute resources. Wait for the response to complete before asking another question. Response times can vary.
 
-    **RAG note:** The application retrieves relevant document text and passes it to Granite to help generate an answer. Both steps use this process: first with basic sample context, then with context from the uploaded documentation.
+    ![Ask Granite a question with an empty document list](./images/ask-granite-without-documents.png)
 
-    ![Primary Ashburn AI workload showing healthy services and connected database](./images/validate-ai-application-primary.png)
+    Confirm that Granite returns an answer. Below the response, check for **Without RAG — direct Granite response** and no document sources. Your answer may differ from the example.
 
-    Confirm that the application shows **Active DB region** and **Connected DB region** as `us-ashburn-1`. Confirm that the API, Autonomous AI Database, and Ollama statuses show **ok** or **up**, and that the model is `granite4.1:3b`.
+    ![Granite response without RAG before uploading a document](./images/validate-ai-response-without-rag.png)
 
-    ![Validate Granite response using seeded-document context](./images/validate-ai-response-without-rag.png)
+    **RAG note:** Retrieval-augmented generation (RAG) adds retrieved document text to the question sent to Granite. The first response uses no document context. After you upload a document, the application can retrieve its text chunks to help generate an answer.
 
-2. Test the document retrieval experience.
+    **Existing environments:** If documents are already listed, uncheck **Use uploaded documents when available** before asking the first question. This bypasses all stored documents without deleting them. The deployment smoke test may also appear in **ADB-backed history**; chat history is not sent to Granite as context.
+
+2. Upload the documentation to test RAG.
 
     Download the [OCI Full Stack Disaster Recovery official documentation](https://c4u02.objectstorage.us-ashburn-1.oci.customer-oci.com/p/9DEArLjsgbKXuJgQtSG95E8hMXRFtxgHR8jiHbqz4HgyVYXVnSo0SC_s-zq5CJA3/n/c4u02/b/hosted-files/o/OCI%20Full%20Stack%20DR%20doc.pdf) to your local computer, not to Cloud Shell.
 
-    Return to the AI application and upload the PDF. Select the file, click **Upload & Index**, and wait for the confirmation that the document was indexed into Autonomous AI Database. The application splits the document into text chunks and stores them in Autonomous AI Database. It uses keyword scoring to select relevant chunks as context for Granite.
+    Under **Upload a document**, select the PDF and click **Upload & Index**. Wait for the indexing confirmation and verify that the PDF appears under **ADB-backed documents**.
+
+    The application splits the document into text chunks and stores them in Autonomous AI Database. It uses keyword scoring to select chunks as context for Granite.
 
     ![Upload FSDR documentation](./images/upload-fsdr-doc.png)
-    
-3. In the chat window, enter the following question again:
+
+3. Select **Use uploaded documents when available**, then enter the same question and click **Ask**:
 
     **What is OCI Full Stack Disaster Recovery?**
 
-    Check the source filenames and excerpts to confirm that the uploaded documentation was used as context for Granite. The generated wording may vary. In Lab 4, you will repeat this check in Phoenix without uploading the document again.
+    Confirm that the response is labeled **With RAG — document context used**. Unlike the generic response in Step 1, which used Granite's model knowledge without document context, this answer is generated using excerpts retrieved from the documentation you uploaded in Step 2. It should reflect the information in that document.
 
-    ![Validate Granite response using uploaded-document context](./images/validate-ai-response-with-rag.png)
+    Review the **Sources** filenames and excerpts below the response to confirm that the uploaded PDF was used and that the answer accurately reflects the documentation. RAG grounds the answer in document content, but does not guarantee correctness. The generated wording may vary.
 
-    **Follow-up questions:** You can ask additional questions about OCI Full Stack Disaster Recovery and verify that the responses continue to use relevant information from the uploaded documentation.
-
-    For example, ask:
-
-    **What are the supported members in OCI Full Stack DR?**
-
-    ![Follow-up question about supported OCI Full Stack DR members](./images/follow-up-supported-members.png)
+    ![Granite response using RAG after uploading the documentation](./images/validate-ai-response-with-rag.png)
 
 In Lab 2, you will configure OCI Full Stack Disaster Recovery for this AI workload, including the primary and standby DR protection groups and their recovery plans.
 

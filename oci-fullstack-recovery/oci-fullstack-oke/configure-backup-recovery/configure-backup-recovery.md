@@ -8,7 +8,7 @@ The synthetic AI workload runs on both compute VMs as a scheduler. It continuous
 
 At a high level, the configuration script creates the backup policy and Full Stack BR protection group, adds the compute and volume group members, and activates protection. You then use the OCI Console to create or review member backups, create a recovery point from the Recovery Catalog, and use a Full Stack BR plan to recover a protected compute resource.
 
-**Before you begin:** Complete Lab 3 Task 2 and start the Start Drill execution. Then begin Lab 5 while the DR execution runs.
+**Before you begin:** Start the Start Drill execution in Lab 3, Task 2, Steps 1–4. Then begin Lab 5 while the DR execution runs.
 
 Complete the Full Stack BR activities while the DR execution runs. Start Lab 4 only after Lab 3 completes successfully.
 
@@ -60,7 +60,7 @@ In this lab, you will:
     - Creates the Full Stack BR protection group.
     - Adds the individual volume group and compute-instance members for both VMs.
     - Activates the Full Stack BR protection group.
-    - Provisions or refreshes the default and user-defined Full Stack BR plans and enables scheduled backups.
+    - Waits for protection activation to complete. Review the service-generated default plans in Task 4; this workshop does not add user-defined BR plan groups.
 
 3. Run the Full Stack BR configuration wrapper:
 
@@ -80,7 +80,7 @@ In this lab, you will:
 
     ![Full Stack BR protection activated successfully](./images/full-stack-br-activation-complete.png)
 
-4. Monitor the script output until it returns successfully. Record the Full Stack BR protection group, backup policy, plan, and execution identifiers that it reports. You will create or review member backups, recovery points, and recovery-plan executions in the OCI Console in the following tasks.
+4. Monitor the script output until it returns successfully. Record the Full Stack BR protection group and backup policy identifiers that it reports. The standard command does not execute a backup; you will run the backup plan in Task 4. You will create or review member backups, recovery points, and recovery-plan executions in the OCI Console in the following tasks.
 
 ## Task 3: Review the Full Stack BR Protection Group
 
@@ -158,7 +158,7 @@ In this lab, you will:
 
     ![Active First recovery point](./images/full-stack-br-recovery-catalog-point.png)
 
-4. After **First recovery point** becomes **Active**, note that the recovery point captures the workload counter at that point in time. The synthetic AI workload completes one job every minute, so the value will vary depending on when the VMs were started and when the recovery point was created. Use the counter values from your own workload tabs as the reference.
+4. After **First recovery point** becomes **Active**, review the member backups it references. Recovery restores the workload state captured by those backups, not the counter value when the recovery point becomes active. Use the pre-backup and post-backup counters recorded in Task 4 as comparison checkpoints. The restored value may fall between them because the workload continues running during backup.
 
 5. In the Recovery catalog, select **First recovery point**. Confirm that its state is **Active**, then select **Actions** → **Recover now**.
 
@@ -188,7 +188,7 @@ In this lab, you will:
 
 ## Conclusion
 
-You have completed **Build and Test Resiliency for AI Workloads with OCI Full Stack Disaster Recovery**. You configured and tested cross-region recovery with Full Stack DR. You then used Full Stack BR to protect and recover the Ashburn compute instances and their individual volume groups.
+You have completed the Full Stack BR track by protecting and recovering the Ashburn compute instances and their individual volume groups. If you ran this lab while the Start Drill was in progress, return to Lab 3 to confirm that the drill succeeded, then complete Lab 4 to validate the recovered application in Phoenix.
 
 Together, OCI Full Stack DR and OCI Full Stack BR help you protect, recover, and validate the infrastructure, data, and application services that support a resilient AI workload.
 

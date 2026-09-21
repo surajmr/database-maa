@@ -76,17 +76,21 @@ In this lab, you will:
 
 1. Open the recovered application URL in a separate browser tab.
 
-2. Confirm that the frontend loads and that the backend, Phoenix Autonomous AI Database, and AI inference service health indicators are available.
+2. Confirm that the frontend loads. Verify that the API, Autonomous DB, and Ollama statuses show **ok** or **up**, that **Active DB region** and **Connected DB region** show `us-phoenix-1`, and that the model is `granite4.1:3b`.
 
-    In the chat window, enter:
+    Keep **Use uploaded documents when available** checked. In **Chat with Granite**, enter the following question and click **Ask**:
 
     **What is OCI Full Stack Disaster Recovery?**
 
-    Ask the question without uploading the document again. Confirm that Granite responds and that the source filenames and excerpts include the documentation uploaded in Lab 1. This verifies that the recovered application can use the document data in Phoenix.
+    Ask the question without uploading the document again. Allow about a minute for the response on this demo cluster. Confirm that the response is labeled **With RAG — document context used** and that the source filenames and excerpts include the documentation uploaded in Lab 1. This verifies that the recovered application can use the document data in Phoenix.
 
     ![Phoenix AI workload showing healthy services, connected Phoenix database, and a RAG response](./images/phoenix-ai-workload-rag-validation.png)
 
-3. If validation fails, inspect Kubernetes events and backend logs. Use the failed task message and log to identify region, policy, protection group, volume replication, wallet, or Kubernetes-context issues.
+3. If the response displays an error or HTML text like the example below, wait briefly and click **Ask** again to retry the same question. Wait for the retry to finish before submitting another request.
+
+    ![Response displaying HTML from a McAfee Web Gateway notification](./images/phoenix-ai-response-error.png)
+
+    If application validation still fails, inspect Kubernetes events and backend logs. Use the error messages to identify region, policy, protection group, volume replication, wallet, or Kubernetes-context issues.
 
     ```bash
     kubectl -n ai-fsdr-lab get events --sort-by=.metadata.creationTimestamp
@@ -97,7 +101,7 @@ In this lab, you will:
 
 You have completed the OCI Full Stack Disaster Recovery lab. You deployed and validated the AI workload, configured snapshot standby protection, executed a Start Drill, and validated the recovered Phoenix application with RAG.
 
-In Lab 5, you will configure Full Stack Backup Recovery for the Ashburn compute instances and volume group, then review the backup policy, BR point, and plan execution.
+If you have not finished Lab 5, return to it to complete backup and recovery validation for the Ashburn compute instances and their volume groups. If you completed Lab 5 while the Start Drill ran, you have finished both workshop tracks.
 
 You may now [proceed to the next lab](#next).
 

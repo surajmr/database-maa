@@ -1,6 +1,6 @@
 # Introduction
 
-## About the Workshop
+## Introduction
 
 In this workshop, you learn how Oracle Cloud Infrastructure (OCI) Full Stack Disaster Recovery (Full Stack DR) and OCI Full Stack Backup Recovery (Full Stack BR) protect and recover different parts of a resilient AI environment.
 
@@ -17,81 +17,83 @@ The workshop focuses on resiliency services rather than application development.
 
 Together, these tracks demonstrate cross-region application DR orchestration with Full Stack DR and single-region backup and recovery orchestration with Full Stack BR.
 
-## Task 1: Service Overview
+## Task 1: Review the Service Overview
 
-### OCI Full Stack Disaster Recovery
+1. Review the services and resources used in this workshop.
 
-OCI Full Stack DR orchestrates the transition of compute, database, and application resources between OCI regions. It automates the steps needed to recover one or more business systems without redesigning or re-architecting existing infrastructure, databases, or applications, and without specialized management or conversion servers. Full Stack DR can coordinate a broad set of OCI services that make up an application stack. The supported resource types include:
+    ### OCI Full Stack Disaster Recovery
 
-**Compute**
+    OCI Full Stack DR orchestrates the transition of compute, database, and application resources between OCI regions. It automates the steps needed to recover one or more business systems without redesigning or re-architecting existing infrastructure, databases, or applications, and without specialized management or conversion servers. Full Stack DR can coordinate a broad set of OCI services that make up an application stack. The supported resource types include:
 
-- Compute instances (including dedicated VM hosts)
+    **Compute**
 
-**Oracle Database**
+    - Compute instances (including dedicated VM hosts)
 
-- Oracle Autonomous AI Database Serverless
-- Oracle Autonomous AI Database on Dedicated Exadata Infrastructure
-- Oracle Autonomous AI Database on Exadata Cloud@Customer
-- Oracle Base Database Service
-- Oracle Exadata Database Service on Dedicated Infrastructure
-- Oracle Exadata Database Service on Exascale Infrastructure
-- Oracle Exadata Database Service on Cloud@Customer
+    **Oracle Database**
 
-**MySQL Database**
+    - Oracle Autonomous AI Database Serverless
+    - Oracle Autonomous AI Database on Dedicated Exadata Infrastructure
+    - Oracle Autonomous AI Database on Exadata Cloud@Customer
+    - Oracle Base Database Service
+    - Oracle Exadata Database Service on Dedicated Infrastructure
+    - Oracle Exadata Database Service on Exascale Infrastructure
+    - Oracle Exadata Database Service on Cloud@Customer
 
-- MySQL HeatWave
+    **MySQL Database**
 
-**Storage**
+    - MySQL HeatWave
 
-- Boot and Block Volumes (Volume Groups)
-- File Systems
-- Object Storage buckets
+    **Storage**
 
-**Networking**
+    - Boot and Block Volumes (Volume Groups)
+    - File Systems
+    - Object Storage buckets
 
-- Load Balancers
-- Network Load Balancers
+    **Networking**
 
-**Developer Services**
+    - Load Balancers
+    - Network Load Balancers
 
-- Kubernetes Engine (OKE)
-- Integration Instance
+    **Developer Services**
 
-For these supported services, Full Stack DR automatically creates the recovery steps required to transition protected resources between regions. You can further customize the plans by adding user-defined plan groups for other OCI services and applications running on virtual machines.
+    - Kubernetes Engine (OKE)
+    - Integration Instance
 
-Full Stack DR brings these service-specific recovery operations together into ordered plans with dependencies, prechecks, execution logs, and post-recovery validation. Each service's native replication, backup, or standby technology must be configured separately.
+    For these supported services, Full Stack DR automatically creates the recovery steps required to transition protected resources between regions. You can further customize the plans by adding user-defined plan groups for other OCI services and applications running on virtual machines.
 
-In this workshop, Full Stack DR uses replication, prechecks, plans, and execution monitoring to recover the OKE application and Autonomous AI Database from Ashburn to Phoenix. You execute a Start Drill plan and validate the recovered application.
+    Full Stack DR brings these service-specific recovery operations together into ordered plans with dependencies, prechecks, execution logs, and post-recovery validation. Each service's native replication, backup, or standby technology must be configured separately.
 
-### Full Stack Backup Recovery
+    In this workshop, Full Stack DR uses replication, prechecks, plans, and execution monitoring to recover the OKE application and Autonomous AI Database from Ashburn to Phoenix. You execute a Start Drill plan and validate the recovered application.
 
-OCI Full Stack BR provides coordinated backup and recovery for OCI resources within one region. It protects infrastructure state, backup configuration, member backups, and BR points that form consistent recovery points.
+    ### Full Stack Backup Recovery
 
-In this workshop, Full Stack BR protects two Ashburn compute virtual machines and an individual volume group for each VM. You configure the BR protection group and policy, review the catalog and recovery point, and run a backup and recovery plan.
+    OCI Full Stack BR provides coordinated backup and recovery for OCI resources within one region. It protects infrastructure state, backup configuration, member backups, and BR points that form consistent recovery points.
 
-### How the Services Work Together
+    In this workshop, Full Stack BR protects two Ashburn compute virtual machines and an individual volume group for each VM. You configure the BR protection group and policy, review the catalog and recovery point, and run a backup and recovery plan.
 
-Full Stack DR handles cross-region application recovery, while Full Stack BR handles regional backup and recovery for compute and storage. Together, they support a complete resiliency process:
+    ### How the Services Work Together
 
-- **Know** the resources, dependencies, regions, and recovery readiness of the application.
-- **Protect** application data, volumes, database services, and Kubernetes resources.
-- **Recover** the protected stack through tested and repeatable plans.
-- **Prove** recovery by validating application health, AI responses, document access, and database persistence.
+    Full Stack DR handles cross-region application recovery, while Full Stack BR handles regional backup and recovery for compute and storage. Together, they support a complete resiliency process:
 
-### Benefits of the Services
+    - **Know** the resources, dependencies, regions, and recovery readiness of the application.
+    - **Protect** application data, volumes, database services, and Kubernetes resources.
+    - **Recover** the protected stack through tested and repeatable plans.
+    - **Prove** recovery by validating application health, AI responses, document access, and database persistence.
 
-OCI Full Stack DR and BR help organizations:
+    ### Benefits of the Services
 
-- Coordinate recovery for the full application stack.
-- Reduce recovery time through repeatable operational steps.
-- Use service-level plans, prechecks, logs, and monitoring to manage recovery.
-- Protect the infrastructure and data required by AI workloads.
-- Customize recovery plans with application-specific validation.
-- Test recovery readiness through drills before an outage.
+    OCI Full Stack DR and BR help organizations:
 
-Estimated Workshop Time: 90 minutes
+    - Coordinate recovery for the full application stack.
+    - Reduce recovery time through repeatable operational steps.
+    - Use service-level plans, prechecks, logs, and monitoring to manage recovery.
+    - Protect the infrastructure and data required by AI workloads.
+    - Customize recovery plans with application-specific validation.
+    - Test recovery readiness through drills before an outage.
 
-## Task 2: Workshop Architecture
+    Estimated Workshop Time: 90 minutes
+
+## Workshop Architecture
 
 The workshop uses a primary OKE and Autonomous AI Database environment in Ashburn and a standby recovery environment in Phoenix. Autonomous Data Guard protects the databases, and cross-region volume replication protects the AI workload persistent volume. Full Stack DR coordinates the application, storage, database, and validation workflow. Full Stack BR provides regional backup and recovery for protected compute and volume resources.
 
@@ -103,7 +105,7 @@ The workshop uses a primary OKE and Autonomous AI Database environment in Ashbur
 
 ![OCI Full Stack Backup Recovery protecting two compute VMs and a volume group in the Ashburn region](./images/full-stack-br-architecture.png)
 
-## Task 3: Environment Details
+## Environment Details
 
 - The workshop uses Ashburn as the primary region and Phoenix as the standby region.
 - The bootstrap script creates the `fsdr-iad-primary` and `fsdr-phx-standby` Kubernetes contexts.
@@ -118,7 +120,7 @@ The workshop environment includes the following resources for the two resiliency
 - **Full Stack DR:** A primary OKE cluster and Autonomous AI Database in Ashburn, a standby OKE cluster and Autonomous AI Database in Phoenix, and Autonomous Data Guard between the databases. Lab 1 creates and configures the AI workload persistent volume group with cross-region replication.
 - **Full Stack BR:** Two compute instances and an individual block volume group for each VM in Ashburn. These resources are added to a BR protection group for backup and recovery.
 
-## Task 4: Workshop Objectives
+## Objectives
 
 - Deploy and validate the cloud-native AI workload.
 - Configure the Full Stack DR resources.
@@ -129,7 +131,7 @@ The workshop environment includes the following resources for the two resiliency
 - Run Full Stack BR backup and recovery plans and verify their executions.
 - Troubleshoot common policy, context, replication, and application-validation issues.
 
-## Task 5: Reference Links
+## Reference Links
 
 [OCI Full Stack Disaster Recovery](https://www.oracle.com/cloud/full-stack-disaster-recovery/)
 

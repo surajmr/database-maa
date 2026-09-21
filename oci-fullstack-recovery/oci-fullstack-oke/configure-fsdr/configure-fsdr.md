@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Configure Full Stack DR for the AI application from Lab 1. Keep the original Ashburn Cloud Shell session available. The configuration creates DR Protection Groups and DR plans for the primary and standby regions. It configures the Autonomous AI Database as a snapshot standby for DR Drill operations.
+Configure Full Stack DR for the AI application from Lab 1. Keep the original Ashburn Cloud Shell session available. The configuration creates DR Protection Groups and DR plans for the primary and standby regions. It configures the DR plan to convert the standby Autonomous AI Database to a snapshot standby when you execute Start Drill in Lab 3.
 
 Run the commands from the Ashburn Cloud Shell used in Lab 1.
 
@@ -143,7 +143,7 @@ In this lab, you will:
 
     ![Start Drill plan groups in the standby DR protection group](./images/fsdr-start-drill-plan-groups.png)
 
-    The **Start Drill** plan runs built-in prechecks, restores the Ollama volume group for the drill, converts the standby Autonomous Database to a snapshot standby, and restores the standby OKE cluster. These steps create a recovery test environment without changing the production roles of the DR protection groups.
+    After the separate precheck run in Lab 3, the **Start Drill** execution restores the Ollama volume group for the drill, converts the standby Autonomous Database to a snapshot standby, and restores the standby OKE cluster. These steps create a recovery test environment without changing the production roles of the DR protection groups.
 
 
     > **Workshop execution:** We will run the **Start Drill** plan as part of this workshop in **Lab 3**. Do not execute it in Lab 2.
