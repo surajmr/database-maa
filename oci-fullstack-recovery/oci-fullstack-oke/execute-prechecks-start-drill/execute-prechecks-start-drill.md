@@ -4,11 +4,14 @@
 
 In this lab, run prechecks and execute the Full Stack DR **Start Drill** plan from Lab 2. The drill starts recovery in the Phoenix standby region. It does not promote Phoenix to the production role. Leave the drill running after it completes. Lab 4 validates the application there.
 
+Watch the video below for a quick walk-through of the lab.
+[Execute Prechecks and Start Drill](videohub:1_v9tpaggr)
+
 Complete Lab 3 Task 1 and start the Start Drill execution in Task 2. Then run Lab 5 in parallel while the Start Drill runs. The Start Drill can take 15–20 minutes. Complete Lab 3 before starting Lab 4.
 
 **Before you begin:** Complete Lab 2 and open the Phoenix OCI Console tab.
 
-Complete Lab 2 first. Use the Phoenix OCI Console tab and the standby DR protection group. Run the plan prechecks and execution from that protection group.
+Run the plan prechecks and execution from the standby DR protection group in Phoenix.
 
 The application namespace is `ai-fsdr-lab`. The Start Drill restores the application resources for this namespace in the Phoenix standby OKE cluster.
 

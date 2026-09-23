@@ -4,6 +4,9 @@
 
 In this lab, use the supplied configuration script to configure OCI Full Stack Backup Recovery (Full Stack BR) for protected resources in the Ashburn region. Full Stack BR protects two compute virtual machines and an individual volume group for each VM within one region.
 
+Watch the video below for a quick walk-through of the lab.
+[Configure and Execute Full Stack Backup Recovery](videohub:1_d7qsytvw)
+
 The synthetic AI workload runs on both compute VMs as a scheduler. It continuously updates a counter by completing one job every minute. Record the counter value before and after Full Stack BR operations and use it to observe workload continuity during backup and recovery testing.
 
 At a high level, the configuration script creates the backup policy and Full Stack BR protection group, adds the compute and volume group members, and activates protection. You then use the OCI Console to create or review member backups, create a recovery point from the Recovery Catalog, and use a Full Stack BR plan to recover a protected compute resource.
@@ -22,8 +25,8 @@ In this lab, you will:
 - Run the Full Stack BR configuration script.
 - Review the Ashburn Full Stack BR protection group and its protected members.
 - Review the default backup plan and its plan groups.
-- Review the catalog and Full Stack BR point.
-- Run a backup or recovery plan and verify its execution.
+- Review the catalog and Full Stack BR recovery point.
+- Run backup and recovery plans and verify their executions.
 
 ## Task 1: Record the Synthetic AI Workload Baseline
 

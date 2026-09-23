@@ -1,8 +1,11 @@
-# Lab 4: Execute Post DR Script and Validate the App
+# Lab 4: Execute the Post-DR Script and Validate the App
 
 ## Introduction
 
 After the Full Stack DR Start Drill plan completes, run the post-DR script to point the recovered application to Phoenix. Then validate the cloud-native AI workload with the document chunks already in the Phoenix database.
+
+Watch the video below for a quick walk-through of the lab.
+[Execute Post-DR Script and Validate the App](videohub:1_jqhuyewg)
 
 Complete Lab 3 and wait for the Start Drill plan to finish successfully before starting this lab. Lab 4 depends on the completed Start Drill environment.
 
@@ -10,7 +13,7 @@ Complete Lab 3 and wait for the Start Drill plan to finish successfully before s
 
 The restored application runs in the `ai-fsdr-lab` namespace on the Phoenix standby OKE cluster. Use `kubectl -n ai-fsdr-lab` for application checks and troubleshooting.
 
-The FSDR document uploaded in Ashburn is already available in Phoenix. Autonomous Data Guard synchronizes the stored document data, including its text chunks. During the drill, the Phoenix snapshot standby accepts application connections. The recovered application uses keyword scoring to retrieve the existing document chunks as context for Granite, without another upload.
+The Full Stack DR document uploaded in Ashburn is already available in Phoenix. Autonomous Data Guard synchronizes the stored document data, including its text chunks. During the drill, the Phoenix snapshot standby accepts application connections. The recovered application uses keyword scoring to retrieve the existing document chunks as context for Granite, without another upload.
 
 Estimated Time: 10 minutes
 

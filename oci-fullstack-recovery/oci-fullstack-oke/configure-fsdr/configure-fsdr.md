@@ -4,6 +4,9 @@
 
 Configure Full Stack DR for the AI application from Lab 1. Keep the original Ashburn Cloud Shell session available. The configuration creates DR Protection Groups and DR plans for the primary and standby regions. It configures the DR plan to convert the standby Autonomous AI Database to a snapshot standby when you execute Start Drill in Lab 3.
 
+Watch the video below for a quick walk-through of the lab.
+[Configure Full Stack DR](videohub:1_zwchhrdr)
+
 Run the commands from the Ashburn Cloud Shell used in Lab 1.
 
 **Before you begin:** Complete Lab 1 and keep the original Ashburn Cloud Shell session available.
@@ -65,8 +68,6 @@ In this lab, you will:
     Press **Enter** to start creating the Switchover, Failover, and Start Drill plans. Plan creation takes approximately **7–8 minutes**. While the plans are being created, continue to **Task 2: Monitor the Configuration in the OCI Console**. Keep the Ashburn Cloud Shell tab open.
 
     When the script finishes, return to Task 1. Confirm that it returns to the shell prompt and displays the OCIDs for the primary and standby protection groups and the three DR plans. The complete configuration takes approximately 10 minutes, excluding time spent at the confirmation prompts.
-
-    A successful run displays the OCIDs for the primary and standby protection groups and the three plans, then returns to the shell prompt.
 
     ![Lab 2 snapshot standby DR plans created successfully](./images/fsdr-snapshot-standby-plans-created.png)
 

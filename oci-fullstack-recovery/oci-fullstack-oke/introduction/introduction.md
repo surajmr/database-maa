@@ -4,7 +4,10 @@
 
 In this workshop, you learn how Oracle Cloud Infrastructure (OCI) Full Stack Disaster Recovery (Full Stack DR) and OCI Full Stack Backup Recovery (Full Stack BR) protect and recover different parts of a resilient AI environment.
 
-The workload is an AI Retrieval-Augmented Generation (RAG) application deployed on Oracle Kubernetes Engine (OKE). It includes a web frontend, FastAPI backend, AI inference service, persistent application storage, and Oracle Autonomous AI Database connectivity.
+Watch the video below for a quick overview of the workshop.
+[Full Stack DR and Full Stack BR Workshop Overview](videohub:1_dtqjch4l)
+
+The Full Stack DR track uses an AI Retrieval-Augmented Generation (RAG) application deployed on Oracle Kubernetes Engine (OKE). It includes a web frontend, FastAPI backend, AI inference service, persistent application storage, and Oracle Autonomous AI Database connectivity. The Full Stack BR track uses a separate synthetic AI workload running on two compute virtual machines.
 
 The workshop focuses on resiliency services rather than application development. You first deploy the supplied AI workload and then complete two related tracks.
 
@@ -13,7 +16,7 @@ The workshop focuses on resiliency services rather than application development.
 - **OCI Full Stack DR:** Protect the OKE application and Autonomous AI Database across the Ashburn primary region and Phoenix standby region. Configure DR protection groups and plans, execute a Start Drill plan, and validate the recovered AI application in Phoenix.
 - **OCI Full Stack BR:** Protect two Ashburn compute virtual machines. Each VM runs the synthetic AI workload and has its own volume group. Configure the BR protection group and backup policy, review the catalog and recovery point, and run a backup and recovery plan.
 
-**Resiliency note:** This workshop demonstrates resiliency at two levels: Full Stack DR provides cross-region application recovery, while Full Stack BR provides regional backup and recovery. The synthetic AI workload and application validation steps help you observe service continuity and confirm that recovery operations restore the required resources.
+This workshop demonstrates resiliency at two levels: Full Stack DR provides cross-region application recovery, while Full Stack BR provides regional backup and recovery. The synthetic AI workload and application validation steps help you observe service continuity and confirm that recovery operations restore the required resources.
 
 Together, these tracks demonstrate cross-region application DR orchestration with Full Stack DR and single-region backup and recovery orchestration with Full Stack BR.
 
