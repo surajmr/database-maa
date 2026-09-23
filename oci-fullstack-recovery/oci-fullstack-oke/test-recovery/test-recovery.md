@@ -104,9 +104,9 @@ In this lab, you will:
 
 You have completed the OCI Full Stack Disaster Recovery lab. You deployed and validated the AI workload, configured snapshot standby protection, executed a Start Drill, and validated the recovered Phoenix application with RAG.
 
-If you have not finished Lab 5, return to it to complete backup and recovery validation for the Ashburn compute instances and their volume groups. If you completed Lab 5 while the Start Drill ran, you have finished both workshop tracks.
+Now return to [Lab 5: Configure and Execute Full Stack Backup Recovery](?lab=configure-backup-recovery) and resume from the task and step you recorded. Use the Ashburn Cloud Shell. Check the status of any script, backup, or recovery operation you left running before continuing; do not submit it again. If you have not started Lab 5, begin at Task 1. Complete all remaining Lab 5 tasks to finish the workshop.
 
-You may now [proceed to the next lab](#next).
+If you completed Lab 5 while the Start Drill ran, you have finished both workshop tracks. No further lab work is required. The **Next** button opens Lab 5; you do not need to repeat it.
 
 ## Acknowledgements
 
