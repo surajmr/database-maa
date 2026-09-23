@@ -4,7 +4,10 @@
 
 In this workshop, you learn how Oracle Cloud Infrastructure (OCI) Full Stack Disaster Recovery (Full Stack DR) and OCI Full Stack Backup Recovery (Full Stack BR) protect and recover different parts of a resilient AI environment.
 
-The workload is an AI Retrieval-Augmented Generation (RAG) application deployed on Oracle Kubernetes Engine (OKE). It includes a web frontend, FastAPI backend, AI inference service, persistent application storage, and Oracle Autonomous AI Database connectivity.
+Watch the video below for a quick overview of the workshop.
+[Full Stack DR and Full Stack BR Workshop Overview](videohub:1_dtqjch4l)
+
+The Full Stack DR track uses an AI Retrieval-Augmented Generation (RAG) application deployed on Oracle Kubernetes Engine (OKE). It includes a web frontend, FastAPI backend, AI inference service, persistent application storage, and Oracle Autonomous AI Database connectivity. The Full Stack BR track uses a separate synthetic AI workload running on two compute virtual machines.
 
 The workshop focuses on resiliency services rather than application development. You first deploy the supplied AI workload and then complete two related tracks.
 
@@ -13,9 +16,21 @@ The workshop focuses on resiliency services rather than application development.
 - **OCI Full Stack DR:** Protect the OKE application and Autonomous AI Database across the Ashburn primary region and Phoenix standby region. Configure DR protection groups and plans, execute a Start Drill plan, and validate the recovered AI application in Phoenix.
 - **OCI Full Stack BR:** Protect two Ashburn compute virtual machines. Each VM runs the synthetic AI workload and has its own volume group. Configure the BR protection group and backup policy, review the catalog and recovery point, and run a backup and recovery plan.
 
-**Resiliency note:** This workshop demonstrates resiliency at two levels: Full Stack DR provides cross-region application recovery, while Full Stack BR provides regional backup and recovery. The synthetic AI workload and application validation steps help you observe service continuity and confirm that recovery operations restore the required resources.
+This workshop demonstrates resiliency at two levels: Full Stack DR provides cross-region application recovery, while Full Stack BR provides regional backup and recovery. The synthetic AI workload and application validation steps help you observe service continuity and confirm that recovery operations restore the required resources.
 
 Together, these tracks demonstrate cross-region application DR orchestration with Full Stack DR and single-region backup and recovery orchestration with Full Stack BR.
+
+### Lab Execution Order
+
+For this 90-minute workshop, follow this order: **Lab 1 → Lab 2 → start Lab 3 → work on Lab 5 during the drill wait → finish Labs 3–4 when the drill succeeds → resume and finish Lab 5**.
+
+In Lab 3, complete Task 1 and Task 2, Steps 1–4, to start the drill. Keep the Phoenix drill execution open, then open [Lab 5: Configure and Execute Full Stack Backup Recovery](?lab=configure-backup-recovery) in a separate browser tab. Use the Ashburn Cloud Shell for Lab 5. Check the drill status between Lab 5 steps and while waiting for operations.
+
+**When the Start Drill execution shows Succeeded, pause your Lab 5 instructions and prioritize Full Stack DR.** Note your current Lab 5 task, step, and any running operation. Leave running scripts, backups, and recovery operations open and let them continue; do not cancel or restart them. Return to Lab 3, Task 2, Step 5, complete the remaining checks, and then finish Lab 4. After Lab 4, resume Lab 5 from your recorded position and finish all remaining tasks. Both tracks are required to complete the workshop.
+
+If Lab 5 finishes before the drill, return to Lab 3 to monitor it and complete Labs 3–4 once it succeeds. If the drill fails, return to Lab 3 to investigate; do not start Lab 4 until the drill succeeds.
+
+The sidebar and **Next** button follow numerical lab order. Use the links in the lab instructions for the Lab 3–Lab 5 handoff.
 
 ## Task 1: Review the Service Overview
 

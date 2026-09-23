@@ -1,8 +1,11 @@
-# Lab 4: Execute Post DR Script and Validate the App
+# Lab 4: Execute the Post-DR Script and Validate the App
 
 ## Introduction
 
 After the Full Stack DR Start Drill plan completes, run the post-DR script to point the recovered application to Phoenix. Then validate the cloud-native AI workload with the document chunks already in the Phoenix database.
+
+Watch the video below for a quick walk-through of the lab.
+[Execute Post-DR Script and Validate the App](videohub:1_jqhuyewg)
 
 Complete Lab 3 and wait for the Start Drill plan to finish successfully before starting this lab. Lab 4 depends on the completed Start Drill environment.
 
@@ -10,7 +13,7 @@ Complete Lab 3 and wait for the Start Drill plan to finish successfully before s
 
 The restored application runs in the `ai-fsdr-lab` namespace on the Phoenix standby OKE cluster. Use `kubectl -n ai-fsdr-lab` for application checks and troubleshooting.
 
-The FSDR document uploaded in Ashburn is already available in Phoenix. Autonomous Data Guard synchronizes the stored document data, including its text chunks. During the drill, the Phoenix snapshot standby accepts application connections. The recovered application uses keyword scoring to retrieve the existing document chunks as context for Granite, without another upload.
+The Full Stack DR document uploaded in Ashburn is already available in Phoenix. Autonomous Data Guard synchronizes the stored document data, including its text chunks. During the drill, the Phoenix snapshot standby accepts application connections. The recovered application uses keyword scoring to retrieve the existing document chunks as context for Granite, without another upload.
 
 Estimated Time: 10 minutes
 
@@ -101,9 +104,9 @@ In this lab, you will:
 
 You have completed the OCI Full Stack Disaster Recovery lab. You deployed and validated the AI workload, configured snapshot standby protection, executed a Start Drill, and validated the recovered Phoenix application with RAG.
 
-If you have not finished Lab 5, return to it to complete backup and recovery validation for the Ashburn compute instances and their volume groups. If you completed Lab 5 while the Start Drill ran, you have finished both workshop tracks.
+Now return to [Lab 5: Configure and Execute Full Stack Backup Recovery](?lab=configure-backup-recovery) and resume from the task and step you recorded. Use the Ashburn Cloud Shell. Check the status of any script, backup, or recovery operation you left running before continuing; do not submit it again. If you have not started Lab 5, begin at Task 1. Complete all remaining Lab 5 tasks to finish the workshop.
 
-You may now [proceed to the next lab](#next).
+If you completed Lab 5 while the Start Drill ran, you have finished both workshop tracks. No further lab work is required. The **Next** button opens Lab 5; you do not need to repeat it.
 
 ## Acknowledgements
 

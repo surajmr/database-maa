@@ -1,8 +1,10 @@
-# Lab 1: Deploy and Validate the Cloud-Native AI Workload in Primary Region OKE Cluster
-
+# Lab 1: Deploy and Validate the Cloud-Native AI Workload in the Primary Region OKE Cluster
 ## Introduction
 
 Deploy the AI document application in the primary OKE cluster. Verify its components before configuring disaster recovery.
+
+Watch the video below for a quick walk-through of the lab.
+[Deploy AI Workload](videohub:1_24gs4wgc)
 
 **Before you begin**
 
