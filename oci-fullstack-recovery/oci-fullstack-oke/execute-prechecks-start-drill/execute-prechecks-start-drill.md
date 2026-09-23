@@ -7,7 +7,7 @@ In this lab, run prechecks and execute the Full Stack DR **Start Drill** plan fr
 Watch the video below for a quick walk-through of the lab.
 [Execute Prechecks and Start Drill](videohub:1_v9tpaggr)
 
-Complete Lab 3 Task 1 and start the Start Drill execution in Task 2. Then run Lab 5 in parallel while the Start Drill runs. The Start Drill can take 15–20 minutes. Complete Lab 3 before starting Lab 4.
+Complete Lab 3 Task 1 and start the Start Drill execution in Task 2. Use the drill wait to work on Lab 5. The Start Drill can take 15–20 minutes. When it succeeds, pause your Lab 5 instructions, complete the remaining Lab 3 checks, and finish Lab 4 before resuming any unfinished Lab 5 tasks.
 
 **Before you begin:** Complete Lab 2 and open the Phoenix OCI Console tab.
 
@@ -85,7 +85,9 @@ In this lab, you will:
 
     ![Start Drill execution showing Autonomous Database snapshot standby conversion completed while OKE restore remains in progress](./images/autonomous-database-snapshot-standby-in-progress.png)
 
-    **While it runs, you must begin Lab 5: Configure and Execute Full Stack Backup Recovery in a separate tab. Do not start Lab 4 until the Start Drill completes successfully.**
+    **While the drill runs, open [Lab 5: Configure and Execute Full Stack Backup Recovery](?lab=configure-backup-recovery) in a separate browser tab and use the Ashburn Cloud Shell.** Keep the Phoenix drill execution open and check its status between Lab 5 steps and while waiting for operations.
+
+    **When the drill shows Succeeded, pause your Lab 5 instructions.** Note your current task, step, and any running operation. Leave running scripts, backups, and recovery operations open; do not cancel or restart them. Return here to Step 5, complete Steps 5–8, and finish Lab 4. Then resume and finish Lab 5. If Lab 5 finishes first, return here to monitor the drill. If the drill fails, return here to investigate. Do not start Lab 4 until the drill succeeds.
 
 5. Continue expanding plan groups as they run. Monitor each task state and review any warning, failure, or skipped task before you retry or change configuration.
 

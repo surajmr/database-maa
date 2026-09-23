@@ -11,9 +11,11 @@ The synthetic AI workload runs on both compute VMs as a scheduler. It continuous
 
 At a high level, the configuration script creates the backup policy and Full Stack BR protection group, adds the compute and volume group members, and activates protection. You then use the OCI Console to create or review member backups, create a recovery point from the Recovery Catalog, and use a Full Stack BR plan to recover a protected compute resource.
 
-**Before you begin:** Start the Start Drill execution in Lab 3, Task 2, Steps 1–4. Then begin Lab 5 while the DR execution runs.
+**Before you begin:** Start the Start Drill execution in Lab 3, Task 2, Steps 1–4. Begin this lab during the drill wait, using the Ashburn Cloud Shell. Keep the Phoenix drill execution open in another tab.
 
-Complete the Full Stack BR activities while the DR execution runs. Start Lab 4 only after Lab 3 completes successfully.
+**When to switch back to Full Stack DR:** Check the drill status between steps and while waiting for operations. As soon as the Start Drill shows **Succeeded**, note your current Lab 5 task, step, and any running operation, then pause these instructions. Leave running scripts, backups, and recovery operations open and let them continue; do not cancel or restart them. Return to [Lab 3](?lab=execute-prechecks-start-drill), Task 2, Step 5, complete the remaining checks, and then finish [Lab 4](?lab=test-recovery). If the drill fails, return to Lab 3 to investigate; do not start Lab 4 until the drill succeeds.
+
+**After Lab 4:** Return to your recorded Lab 5 task and step. Check the status of any operation you left running before continuing; do not submit it again. Complete every remaining task in this lab. If you already completed Lab 5 during the drill wait, you do not need to repeat it.
 
 Estimated Time: 20 minutes
 
@@ -175,7 +177,7 @@ In this lab, you will:
 
     ![Monitor the recovery plan execution](./images/full-stack-br-recovery-execution-progress.png)
 
-    As soon as the **Compute Instances - Start** group completes successfully, return to the two workload tabs and check the **AI jobs completed** counter on both VMs. Compare the counters with the value captured by **First recovery point**. The values should be approximately aligned with the recovery point, although the workload may complete another job while the remaining recovery steps finish.
+    When you observe the **Compute Instances - Start** group complete successfully, return to the two workload tabs and check the **AI jobs completed** counter on both VMs. Compare the counters with the value captured by **First recovery point**. The values should be approximately aligned with the recovery point, although the workload may complete another job while the remaining recovery steps finish. If you were completing Labs 3–4 when the VMs restarted, record the counters when you return. They may be higher because the workload continued running; do not repeat recovery just to reproduce the example counters.
 
     ![VM workload counters after compute instances restart](./images/synthetic-ai-workload-after-recovery.png)
 
@@ -191,7 +193,9 @@ In this lab, you will:
 
 ## Conclusion
 
-You have completed the Full Stack BR track by protecting and recovering the Ashburn compute instances and their individual volume groups. If you ran this lab while the Start Drill was in progress, return to Lab 3 to confirm that the drill succeeded, then complete Lab 4 to validate the recovered application in Phoenix.
+You have completed the Full Stack BR track by protecting and recovering the Ashburn compute instances and their individual volume groups. If you finished this lab before completing Full Stack DR, return to [Lab 3: Execute Prechecks and the Full Stack DR Start Drill Plan](?lab=execute-prechecks-start-drill), Task 2, Step 5. Monitor the existing drill and complete the remaining checks; do not start another drill. After confirming that the drill succeeded, finish [Lab 4: Execute the Post-DR Script and Validate the App](?lab=test-recovery).
+
+If you have already completed Lab 3 and Lab 4, you have finished both workshop tracks.
 
 Together, OCI Full Stack DR and OCI Full Stack BR help you protect, recover, and validate the infrastructure, data, and application services that support a resilient AI workload.
 
